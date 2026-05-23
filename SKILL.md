@@ -1,4 +1,4 @@
-# Skill: GitHub Starred Repos Review
+# Skill: Gstar
 
 ## Purpose
 Review all GitHub starred repositories for a user and evaluate their relevance to active projects. Produces a structured report with fit scores, pros/cons, and priority recommendations — then uploads the report to GitHub and optionally syncs to NotebookLM.
@@ -106,4 +106,5 @@ Always produce:
 - Re-run this skill monthly or after starring 5+ new repos
 - Version format: v{YYYYMMDD} — allows git history tracking of evaluation evolution
 - For users with 100+ starred repos: paginate API calls, batch evaluate by topic cluster first
+
 
