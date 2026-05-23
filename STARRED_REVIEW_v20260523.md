@@ -77,15 +77,30 @@
 
 ---
 
-## PART 2B｜Top 5 未導入 Repos 優先推薦
+## PART 2B｜Top 20 未導入 Repos 優先推薦
 
 | 排名 | Repo | 建議導入專案 | 核心價值 | 契合度 | 優點 | 缺點/風險 | 建議行動 |
 |------|------|-------------|----------|--------|------|-----------|---------|
 | 🥇 1 | **crewAIInc/crewAI** | Pantheon Stage 3 | role-based agent 編排；與 Pantheon 角色分工完全吻合 | 93/100 | 文件最完整；51k stars；企業支援 | 與 LangGraph 重疊；遷移成本高 | Stage 3 規劃時作為 LangGraph 替代方案評估 |
 | 🥈 2 | **thedotmack/claude-mem** | Pantheon + Aletheia | 跨 session 記憶；補充 openmemory；AI 壓縮 context | 91/100 | ChromaDB 相容；77k stars；跨平台 | 與 openmemory 重疊；雙層記憶複雜度 | 下週評估作為 openmemory 的 session 補充層 |
 | 🥉 3 | **addyosmani/agent-skills** | Pantheon | 生產級 skills 直接定義 Pantheon agent skill profile | 87/100 | Google 工程師驗證；44k stars；即插即用 | Shell-based 需轉為 Python | 本週行動：挑 5 個 skills 整合進 AGENTS.md |
-| 4️⃣ 4 | **rtk-ai/rtk** | Pantheon + Aletheia | Token 節省 60-90%；多代理人成本控制 | 84/100 | Rust 零依賴；52k stars；開源 | CLI proxy 架構調整；LiteLLM 整合待驗證 | Stage 2 前：開發環境先測試 |
-| 5️⃣ 5 | **Agent-Threat-Rule/agent-threat-rules** | Pantheon | Stage 2 雲端上線安全必備；Prompt injection + MCP security | 80/100 | OWASP 標準；97.1% recall；425 條規則 | 規則量大需篩選；需安全背景 | Stage 2 kick-off 前完成 security audit |
+| 4 | **ComposioHQ/awesome-claude-skills** | Pantheon + Aletheia | Skills 資源庫補充 agent capabilities；MCP + automation 涵蓋廣 | 81/100 | 61k stars；持續更新；涵蓋 MCP | Curated list 需篩選；非直接程式碼 | 本週瀏覽篩選出 Pantheon 適用 skills |
+| 5 | **rtk-ai/rtk** | Pantheon + Aletheia | Token 節省 60-90%；多代理人成本控制核心 | 84/100 | Rust 零依賴；52k stars；開源 | CLI proxy 架構調整；LiteLLM 整合待驗證 | Stage 2 前：開發環境先測試 |
+| 6 | **paperclipai/paperclip** | Pantheon | Stage 2 後 agent 管理 UI；多租戶監控儀表板 | 82/100 | 開源；專為 workplace agent；UI 友好 | 專案較新；GCP 相容性待確認 | Stage 2 完成後評估整合 |
+| 7 | **msitarzewski/agency-agents** | Pantheon | 角色設計範本庫；reality checker / creative wizard 等對應 Pantheon 角色 | 83/100 | 完整 AI agency 角色庫；附 personality + deliverables | Shell-based 需轉 Python | 本週參考角色定義更新 AGENTS.md |
+| 8 | **Agent-Threat-Rule/agent-threat-rules** | Pantheon | Stage 2 雲端上線安全必備；Prompt injection + MCP security | 80/100 | OWASP 標準；97.1% recall；425 條規則 | 規則量大需篩選；需安全背景 | Stage 2 kick-off 前完成 security audit |
+| 9 | **multica-ai/andrej-karpathy-skills** | Pantheon + Aletheia | Claude Code 行為改善；避免 LLM coding pitfalls；開發品質直接提升 | 80/100 | 145k stars；單一 CLAUDE.md；即插即用 | 偏 coding agent；非 orchestration | 本週：直接加入 Pantheon + Aletheia CLAUDE.md |
+| 10 | **mattpocock/skills** | Pantheon | Real Engineers 生產級 skills；TypeScript 生態可供架構參考 | 77/100 | 實戰驗證；Shell-based；持續更新 | 偏 TypeScript；Python stack 需轉譯 | 下週參考 skill 結構設計 Pantheon agent skills |
+| 11 | **Lum1104/Understand-Anything** | Pantheon | 程式碼知識圖譜補充 GitNexus；互動式問答 codebase | 78/100 | 18k stars；互動式；Claude Code/Cursor 支援 | 與 GitNexus 功能重疊；TS-Python bridge 需要 | GitNexus index 失效時的備用方案 |
+| 12 | **notoriouslab/browser-mcp-lite** | Pantheon | Browser automation MCP；Pantheon web agent 能力擴充 | 76/100 | 輕量 ~500 行；Token auth；Chrome Extension MV3 | 40 stars；成熟度低 | Stage 2 後評估 browser agent 需求再整合 |
+| 13 | **upstash/context7** | Pantheon + Aletheia | LLM context 文件管理；agents 使用最新 API 文件；MCP-native | 75/100 | MCP-native；55k stars；持續更新 | 需訂閱 Upstash；token 消耗需控制 | 評估 Aletheia 外部文件來源整合 |
+| 14 | **decolua/9router** | Pantheon | 多模型 gateway；開發測試降低成本；auto-fallback | 74/100 | 40+ providers；token 節省；auto-fallback | 免費服務穩定性存疑；生產不建議 | 開發測試環境使用；生產仍用 LiteLLM |
+| 15 | **TauricResearch/TradingAgents** | Pantheon | multi-agent cross-debate 架構參考；共識機制設計靈感 | 70/100 | 78k stars；cross-debate 機制成熟 | 金融場景；核心邏輯需大量改寫 | Stage 3 架構設計時參考 debate 機制 |
+| 16 | **THU-MAIC/OpenMAIC** | Pantheon | 多代理人互動架構；one-click 部署模式參考 | 71/100 | 學術驗證；immersive 多代理人體驗 | 教育場景；整合成本高 | 架構參考用；不直接整合 |
+| 17 | **NYCU-Chung/cc-statusline** | Pantheon | Claude Code 開發儀表板；session/quota/MCP 健康監控 | 70/100 | 本地開發工具；MCP health check | 開發工具非生產需求 | 開發期使用，提升 Pantheon 開發效率 |
+| 18 | **microsoft/ai-agents-for-beginners** | Pantheon | AutoGen/Semantic Kernel 框架比較；Stage 3 框架選型參考 | 72/100 | 微軟出品品質保證；12 lessons；框架比較視角 | 偏教學；Pantheon 已過初學階段 | Stage 3 框架評估時作為比較基準 |
+| 19 | **NousResearch/hermes-agent** | Pantheon | 多模型整合參考（Claude/GPT/Gemini 同時支援）；fallback 機制 | 68/100 | 162k stars；多模型 fallback；開源 | 偏個人助理場景；非企業 orchestration | 多模型整合設計時參考 fallback 邏輯 |
+| 20 | **alchaincyf/nuwa-skill** | Pantheon | Skill 蒸餾框架；定義 Pantheon 各 agent 的思維模式與 persona | 67/100 | 20k stars；思維蒸餾概念；可產出 agent persona | 偏個人 persona 設計；非系統整合 | 定義 Pantheon agent personas 時作為蒸餾模板 |
 
 ---
 
@@ -93,12 +108,16 @@
 
 | 週次 | 行動 | 對應 Repo |
 |------|------|-----------|
-| 本週 | 整合 agent-skills 到 Pantheon AGENTS.md | addyosmani/agent-skills |
+| 本週 | 整合 agent-skills + agency-agents 到 Pantheon AGENTS.md | addyosmani/agent-skills、msitarzewski/agency-agents |
+| 本週 | 加入 karpathy-skills 到 CLAUDE.md | multica-ai/andrej-karpathy-skills |
+| 本週 | 瀏覽 awesome-claude-skills 篩選適用 skills | ComposioHQ/awesome-claude-skills |
 | 下週 | 評估 claude-mem 作為 openmemory 補充層 | thedotmack/claude-mem |
+| Stage 2 前 | 開發環境測試 rtk token 節省效果 | rtk-ai/rtk |
 | Stage 2 kick-off 前 | 執行 security audit checklist | Agent-Threat-Rule/agent-threat-rules |
-| Stage 2 開發中 | 測試 rtk token 節省效果 | rtk-ai/rtk |
+| Stage 2 完成後 | 評估 paperclip agent 管理 UI | paperclipai/paperclip |
 | Stage 3 規劃時 | 評估 crewAI 替代 LangGraph | crewAIInc/crewAI |
 
 ---
 
-*Generated by Claude · Version v20260523 · salafadidas project universe review*
+*Generated by Claude · Gstar Skill · Version v20260523 · salafadidas project universe review*
+*PART 2B updated: Top 5 → Top 20*
