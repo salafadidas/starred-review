@@ -1,914 +1,131 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eSystem — 生態系因果鏈藍圖 v2</title>
+<title>Ecosystem Blueprint — 2026-06-14</title>
 <style>
-  :root {
-    --bg:#0b0f1a; --surface:#111827; --surface2:#0f1929;
-    --border:#1e2d45; --accent:#3b82f6; --accent2:#06b6d4;
-    --red:#ef4444; --orange:#f97316; --yellow:#eab308; --green:#22c55e;
-    --text:#e2e8f0; --muted:#64748b; --dim:#334155;
-    --mono:'JetBrains Mono','Fira Code',monospace;
-    --sans:'Inter',system-ui,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-
-  /* ── Header ── */
-  header{border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;
-    justify-content:space-between;position:sticky;top:0;background:rgba(11,15,26,0.95);
-    z-index:100;backdrop-filter:blur(8px);gap:12px;flex-wrap:wrap}
-  .logo{font-family:var(--mono);font-size:13px;color:var(--accent);display:flex;align-items:center;gap:8px}
-  .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
-  .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .meta{font-size:11px;color:var(--muted);font-family:var(--mono)}
-  .health-badge{font-family:var(--mono);font-size:12px;padding:4px 12px;
-    border:1px solid var(--accent);border-radius:4px;color:var(--accent);white-space:nowrap}
-  .trend-pill{font-family:var(--mono);font-size:11px;padding:3px 10px;
-    border-radius:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);
-    color:var(--green)}
-
-  /* ── Tabs ── */
-  .tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 32px;background:var(--surface)}
-  .tab{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;padding:12px 20px;cursor:pointer;
-    color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
-  .tab:hover{color:var(--text)}
-  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-  /* ── Main ── */
-  main{max-width:1200px;margin:0 auto;padding:32px 32px}
-  .view{display:none}.view.active{display:block}
-  .section-label{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;
-    color:var(--muted);text-transform:uppercase;margin-bottom:14px}
-
-  /* ── Blueprint Canvas ── */
-  .blueprint-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;
-    padding:44px 28px 32px;margin-bottom:32px;position:relative;overflow:hidden}
-  .blueprint-wrap::before{content:'';position:absolute;inset:0;
-    background-image:linear-gradient(rgba(59,130,246,0.025) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(59,130,246,0.025) 1px,transparent 1px);
-    background-size:32px 32px;pointer-events:none}
-
-  /* ── Flow ── */
-  .flow{display:flex;flex-direction:column;align-items:center;gap:0;position:relative}
-  .node{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;
-    padding:18px 22px;width:560px;cursor:pointer;
-    transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;position:relative}
-  .node:hover,.node.active{border-color:var(--accent);
-    box-shadow:0 0 0 1px var(--accent),0 0 20px rgba(59,130,246,0.12);transform:translateY(-1px)}
-  .node.critical{border-color:rgba(239,68,68,0.4)}
-  .node.critical:hover,.node.critical.active{border-color:var(--red);
-    box-shadow:0 0 0 1px var(--red),0 0 20px rgba(239,68,68,0.12)}
-  .node.warn{border-color:rgba(249,115,22,0.4)}
-  .node.warn:hover,.node.warn.active{border-color:var(--orange);
-    box-shadow:0 0 0 1px var(--orange),0 0 20px rgba(249,115,22,0.12)}
-  .node.you{background:linear-gradient(135deg,rgba(59,130,246,0.07),var(--bg));
-    border-color:var(--accent);width:300px;text-align:center}
-  .node.you .node-header{justify-content:center}
-
-  .node-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .node-icon{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;
-    justify-content:center;font-size:14px;flex-shrink:0}
-  .node-title{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:600}
-  .node-role{font-size:10px;color:var(--muted);margin-left:auto;white-space:nowrap}
-  .node-desc{font-size:11px;color:var(--muted);line-height:1.6}
-  .node-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-  .tag{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;
-    border:1px solid var(--dim);color:var(--muted)}
-  .tag.alert{border-color:rgba(239,68,68,0.4);color:var(--red)}
-  .tag.new{border-color:rgba(34,197,94,0.4);color:var(--green)}
-  .tag.active-tag{border-color:rgba(59,130,246,0.4);color:var(--accent)}
-  .health-row{display:flex;align-items:center;gap:8px;margin-top:8px}
-  .hbar{flex:1;height:3px;background:var(--dim);border-radius:2px;overflow:hidden}
-  .hfill{height:100%;border-radius:2px}
-  .hval{font-family:var(--mono);font-size:10px;color:var(--muted);width:30px;text-align:right}
-
-  /* ── Arrows ── */
-  .arrow-wrap{display:flex;flex-direction:column;align-items:center;gap:1px;padding:3px 0;z-index:2}
-  .aline{width:1.5px;height:26px;background:linear-gradient(to bottom,var(--dim),var(--accent))}
-  .alabel{font-family:var(--mono);font-size:9px;color:var(--accent2);background:var(--bg);
-    padding:2px 8px;border:1px solid var(--border);border-radius:10px;white-space:nowrap}
-  .atip{color:var(--accent);font-size:9px;line-height:1}
-  .agap{width:1.5px;height:6px;background:var(--dim)}
-  .arrow-wrap.broken .aline,.arrow-wrap.broken .agap{
-    background:linear-gradient(to bottom,var(--red),rgba(239,68,68,0.15))}
-  .arrow-wrap.broken .alabel{color:var(--red);border-color:rgba(239,68,68,0.3)}
-  .arrow-wrap.broken .atip{color:var(--red)}
-
-  /* ── agent-config side ── */
-  .side-wrap{display:flex;justify-content:center;margin-top:8px}
-  .side-node{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;
-    padding:14px 16px;width:200px;cursor:pointer;
-    transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s}
-  .side-node:hover,.side-node.active{border-color:var(--accent);
-    box-shadow:0 0 0 1px var(--accent),0 0 16px rgba(59,130,246,0.1);transform:translateY(-1px)}
-  .out-node{border-style:dashed;border-color:var(--dim)}
-  .hline{width:50px;height:1.5px;background:var(--dim);align-self:center}
-
-  /* ── Legend ── */
-  .legend{display:flex;gap:20px;justify-content:center;margin-top:28px;flex-wrap:wrap}
-  .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-  .legend-line{width:14px;height:1.5px}
-
-  /* ── Detail Panel ── */
-  .detail-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;
-    padding:26px;margin-bottom:32px;min-height:100px;transition:opacity 0.2s}
-  .detail-panel.empty{display:flex;align-items:center;justify-content:center;
-    color:var(--muted);font-size:12px;font-family:var(--mono)}
-  .detail-title{font-family:var(--mono);font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .dblock{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
-  .dblock-label{font-family:var(--mono);font-size:9px;color:var(--muted);
-    letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
-  .dblock-body{font-size:11px;color:var(--text);line-height:1.7}
-  .dblock-body li{list-style:none;padding:1px 0 1px 14px;position:relative}
-  .dblock-body li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:9px;top:2px}
-  .dblock-body li.alert::before{color:var(--red);content:'⚠'}
-  .dblock-body li.ok::before{color:var(--green);content:'✓'}
-
-  /* ── Status Cards ── */
-  .status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:32px}
-  .scard{background:var(--surface);border:1px solid var(--border);border-radius:8px;
-    padding:14px;cursor:pointer;transition:border-color 0.2s}
-  .scard:hover{border-color:var(--accent2)}
-  .scard.active{border-color:var(--accent)}
-  .scard-repo{font-family:var(--mono);font-size:11px;color:var(--text);margin-bottom:3px}
-  .scard-role{font-size:10px;color:var(--muted);margin-bottom:10px}
-  .scard-score{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:3px}
-  .scard-note{font-size:10px}
-
-  /* ── Action Table ── */
-  .atable{width:100%;border-collapse:collapse;font-size:12px}
-  .atable th{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;
-    color:var(--muted);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
-  .atable td{padding:11px 12px;border-bottom:1px solid rgba(30,45,69,0.5);vertical-align:top;line-height:1.5}
-  .atable tr:last-child td{border-bottom:none}
-  .atable tr:hover td{background:rgba(59,130,246,0.025)}
-  .pbadge{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 7px;
-    border-radius:3px;white-space:nowrap}
-  .p-c{background:rgba(239,68,68,0.08);color:var(--red);border:1px solid rgba(239,68,68,0.25)}
-  .p-h{background:rgba(249,115,22,0.08);color:var(--orange);border:1px solid rgba(249,115,22,0.25)}
-  .p-m{background:rgba(234,179,8,0.08);color:var(--yellow);border:1px solid rgba(234,179,8,0.25)}
-  .p-l{background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.25)}
-
-  /* ── Sprint Timeline ── */
-  .sprint-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;
-    padding:28px;margin-bottom:32px}
-  .sprint-title{font-family:var(--mono);font-size:13px;color:var(--text);
-    margin-bottom:6px;display:flex;align-items:center;gap:10px}
-  .sprint-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
-  .progress-bar{height:6px;background:var(--dim);border-radius:3px;overflow:hidden;margin-bottom:20px}
-  .progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));
-    transition:width 0.6s ease}
-  .sprint-items{display:flex;flex-direction:column;gap:0}
-  .sprint-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;
-    border-bottom:1px solid rgba(30,45,69,0.4);font-size:12px}
-  .sprint-item:last-child{border-bottom:none}
-  .sprint-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;
-    justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
-  .s-done{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
-  .s-crit{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
-  .s-high{background:rgba(249,115,22,0.15);color:var(--orange);border:1px solid rgba(249,115,22,0.3)}
-  .s-med{background:rgba(234,179,8,0.15);color:var(--yellow);border:1px solid rgba(234,179,8,0.3)}
-  .s-tgt{background:rgba(59,130,246,0.15);color:var(--accent);border:1px solid rgba(59,130,246,0.3)}
-  .s-future{background:var(--dim);color:var(--muted);border:1px solid var(--border)}
-  .sprint-text{flex:1;color:var(--text);line-height:1.4}
-  .sprint-text span{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:6px}
-  .sprint-badge{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;
-    white-space:nowrap;align-self:flex-start;margin-top:2px}
-
-  /* ── Health Trend Chart ── */
-  .trend-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;
-    padding:28px;margin-bottom:32px}
-  .trend-chart-area{height:120px;position:relative;margin-top:16px}
-  .trend-svg{width:100%;height:100%}
-  .trend-no-data{font-family:var(--mono);font-size:11px;color:var(--muted);
-    display:flex;align-items:center;justify-content:center;height:100%}
-
-  /* ── Gstar Bridge ── */
-  .gstar-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px}
-  .gcard{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px}
-  .g-score{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);margin-bottom:3px}
-  .g-repo{font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px}
-  .g-gap{font-size:11px;color:var(--muted)}
-
-  .divider{height:1px;background:var(--border);margin:32px 0}
-
-  @media(max-width:700px){
-    main{padding:20px 16px}
-    .node,.node.you{width:100%}
-    .status-grid{grid-template-columns:1fr 1fr}
-    .gstar-row{grid-template-columns:1fr 1fr}
-    .detail-grid{grid-template-columns:1fr}
-    .tabs{padding:0 16px;overflow-x:auto}
-  }
+body{font-family:-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;margin:0;padding:20px}
+h1{color:#58a6ff;border-bottom:1px solid #30363d;padding-bottom:10px}
+h2{color:#79c0ff;margin-top:30px}
+.header-bar{display:flex;justify-content:space-between;align-items:center;background:#161b22;padding:15px 20px;border-radius:8px;margin-bottom:20px;border:1px solid #30363d}
+.health-badge{font-size:1.4em;font-weight:bold}
+.down{color:#f85149}.up{color:#3fb950}.flat{color:#d29922}
+table{width:100%;border-collapse:collapse;margin:15px 0}
+th{background:#161b22;color:#58a6ff;padding:10px;text-align:left;border:1px solid #30363d}
+td{padding:10px;border:1px solid #30363d;vertical-align:top}
+tr:nth-child(even){background:#161b22}
+.red{color:#f85149;font-weight:bold}.orange{color:#d29922}.green{color:#3fb950}
+.tabs{display:flex;gap:5px;margin-bottom:20px}
+.tab{padding:8px 16px;background:#161b22;border:1px solid #30363d;border-radius:6px;cursor:pointer;color:#8b949e}
+.tab.active{background:#1f6feb;color:white;border-color:#1f6feb}
+.tab-content{display:none}.tab-content.active{display:block}
+.sprint-bar{background:#21262d;border-radius:8px;padding:15px;margin:10px 0;font-family:monospace;white-space:pre-line;line-height:1.8}
+.chain{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;font-family:monospace;white-space:pre-line;line-height:2}
+.gap{color:#f85149}.ok{color:#3fb950}.warn{color:#d29922}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="logo"><span class="logo-dot"></span>eSystem v2.0</div>
-  <div class="header-right">
-    <div class="meta">salafadidas · 2026-06-09 · Gstar v20260609c</div>
-    <div class="trend-pill">↑ 首次建立基準線 71.6%</div>
-    <div class="health-badge">健康指數 71.6 / 100</div>
+<div class="header-bar">
+  <div>
+    <h1 style="margin:0;border:none">🌐 Ecosystem Blueprint</h1>
+    <small>salafadidas · 更新：2026-06-14</small>
   </div>
-</header>
+  <div class="health-badge down">整體健康 71.6% → 69.2% ↓</div>
+</div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showView('blueprint')">因果鏈藍圖</div>
-  <div class="tab" onclick="showView('sprint')">Sprint 時間軸</div>
-  <div class="tab" onclick="showView('trend')">健康趨勢</div>
-  <div class="tab" onclick="showView('actions')">優先行動表</div>
-  <div class="tab" onclick="showView('gstar')">Gstar 缺口對應</div>
+  <div class="tab active" onclick="showTab('status')">📊 生態系狀態</div>
+  <div class="tab" onclick="showTab('chain')">🔗 因果鏈</div>
+  <div class="tab" onclick="showTab('sprint')">🚀 Sprint 時間軸</div>
+  <div class="tab" onclick="showTab('actions')">⚡ 優先行動</div>
+  <div class="tab" onclick="showTab('gstar')">🌟 Gstar 整合</div>
 </div>
 
-<main>
-
-<!-- ═══════════ VIEW: BLUEPRINT ═══════════ -->
-<div class="view active" id="view-blueprint">
-  <div class="section-label">生態系因果鏈 — 點擊節點查看詳情</div>
-  <div class="blueprint-wrap">
-    <div class="flow">
-
-      <div class="node" data-id="gstar" onclick="sel('gstar')">
-        <div class="node-header">
-          <div class="node-icon" style="background:rgba(6,182,212,0.1)">🔭</div>
-          <div><div class="node-title">starred-review / Gstar</div>
-          <div class="node-desc">工具探索雷達 — 掃描 60 starred repos，發現生態系所需工具</div></div>
-          <div class="node-role">雷達層</div>
-        </div>
-        <div class="node-tags">
-          <span class="tag active-tag">GitHub API Live</span>
-          <span class="tag">60 repos · 17 新增</span>
-          <span class="tag new">今天執行</span>
-        </div>
-        <div class="health-row">
-          <div class="hbar"><div class="hfill" style="width:82%;background:var(--green)"></div></div>
-          <div class="hval">82%</div>
-        </div>
-      </div>
-
-      <div class="arrow-wrap">
-        <div class="aline"></div>
-        <div class="alabel">工具發現 → 導入建議</div>
-        <div class="agap"></div><div class="atip">▼</div>
-      </div>
-
-      <div class="node critical" data-id="aletheia" onclick="sel('aletheia')">
-        <div class="node-header">
-          <div class="node-icon" style="background:rgba(239,68,68,0.1)">🧠</div>
-          <div><div class="node-title">Aletheia</div>
-          <div class="node-desc">個人知識引擎（第二大腦）— QMD RAG pipeline，Raphael + Pantheon 知識底座</div></div>
-          <div class="node-role">知識層</div>
-        </div>
-        <div class="node-tags">
-          <span class="tag">FastAPI · LiteLLM · markitdown</span>
-          <span class="tag alert">⚠ QMD 未安裝</span>
-          <span class="tag alert">⚠ mem0 待整合</span>
-        </div>
-        <div class="health-row">
-          <div class="hbar"><div class="hfill" style="width:82%;background:var(--orange)"></div></div>
-          <div class="hval">82%</div>
-        </div>
-      </div>
-
-      <div class="arrow-wrap broken">
-        <div class="aline"></div>
-        <div class="alabel">MCP 查詢（filesystem · github）— QMD 缺口</div>
-        <div class="agap"></div><div class="atip">▼</div>
-      </div>
-
-      <div class="node critical" data-id="raphael" onclick="sel('raphael')">
-        <div class="node-header">
-          <div class="node-icon" style="background:rgba(239,68,68,0.1)">⚡</div>
-          <div><div class="node-title">Raphael</div>
-          <div class="node-desc">全知顧問 AI（Hermes Agent）— 整合知識 + 外部工具，提供 Vernon 決策建議</div></div>
-          <div class="node-role">顧問層</div>
-        </div>
-        <div class="node-tags">
-          <span class="tag">Hermes Agent</span>
-          <span class="tag">system_prompt ✓</span>
-          <span class="tag alert">⚠ .mcp.json 空白</span>
-          <span class="tag new">今天建立</span>
-        </div>
-        <div class="health-row">
-          <div class="hbar"><div class="hfill" style="width:66%;background:var(--red)"></div></div>
-          <div class="hval">66%</div>
-        </div>
-      </div>
-
-      <div class="arrow-wrap">
-        <div class="aline"></div>
-        <div class="alabel">決策建議</div>
-        <div class="agap"></div><div class="atip">▼</div>
-      </div>
-
-      <div class="node you" data-id="vernon" onclick="sel('vernon')">
-        <div class="node-header">
-          <div class="node-icon" style="background:rgba(59,130,246,0.12)">👤</div>
-          <div><div class="node-title">Vernon</div>
-          <div class="node-desc">決策核心</div></div>
-        </div>
-      </div>
-
-      <div class="arrow-wrap">
-        <div class="aline"></div>
-        <div class="alabel">執行指令</div>
-        <div class="agap"></div><div class="atip">▼</div>
-      </div>
-
-      <div class="node warn" data-id="pantheon" onclick="sel('pantheon')">
-        <div class="node-header">
-          <div class="node-icon" style="background:rgba(249,115,22,0.1)">🏛️</div>
-          <div><div class="node-title">project-pantheon</div>
-          <div class="node-desc">Agent 指揮中心 + Telegram 入口 — LangGraph flows，GCP Cloud Run 多租戶</div></div>
-          <div class="node-role">執行層</div>
-        </div>
-        <div class="node-tags">
-          <span class="tag">LangGraph · FastAPI · Redis · pgvector</span>
-          <span class="tag alert">⚠ openmemory 停更 69天</span>
-          <span class="tag">Stage 2 Active</span>
-        </div>
-        <div class="health-row">
-          <div class="hbar"><div class="hfill" style="width:82%;background:var(--yellow)"></div></div>
-          <div class="hval">82%</div>
-        </div>
-      </div>
-
-      <div class="arrow-wrap"><div class="aline" style="height:14px"></div><div class="atip">▼</div></div>
-    </div>
-
-    <!-- Side nodes -->
-    <div class="side-wrap">
-      <div style="display:flex;align-items:flex-start;gap:0">
-        <div style="width:260px"></div>
-        <div class="side-node out-node" data-id="output" onclick="sel('output')" style="width:180px;text-align:center">
-          <div style="font-size:18px;margin-bottom:4px">📤</div>
-          <div class="node-title" style="font-size:11px">Output Layer</div>
-          <div class="node-desc" style="font-size:10px;margin-top:3px">Email · Telegram · n8n · Reports</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;margin-left:0">
-          <div style="height:28px;display:flex;align-items:center;padding-left:4px">
-            <div class="hline"></div>
-          </div>
-          <div class="side-node" data-id="agent-config" onclick="sel('agent-config')" style="width:210px;margin-left:4px">
-            <div class="node-header" style="margin-bottom:4px">
-              <div class="node-icon" style="background:rgba(234,179,8,0.1);width:22px;height:22px;font-size:11px">⚙️</div>
-              <div class="node-title" style="font-size:11px">agent-config</div>
-            </div>
-            <div class="node-desc" style="font-size:10px">神經系統 — 配置同步所有 repo</div>
-            <div class="health-row" style="margin-top:6px">
-              <div class="hbar"><div class="hfill" style="width:46%;background:var(--yellow)"></div></div>
-              <div class="hval">46%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-line" style="background:var(--accent)"></div>正常連線</div>
-      <div class="legend-item"><div class="legend-line" style="background:var(--red);opacity:0.6"></div>缺口 / 需修復</div>
-      <div class="legend-item"><div style="width:10px;height:10px;border:1.5px solid var(--red);border-radius:2px"></div>🔴 緊急</div>
-      <div class="legend-item"><div style="width:10px;height:10px;border:1.5px solid var(--orange);border-radius:2px"></div>🟠 高</div>
-    </div>
-  </div>
-
-  <div class="section-label">節點詳情</div>
-  <div class="detail-panel empty" id="detailPanel">← 點擊上方任意節點查看詳細資訊</div>
-
-  <div class="divider"></div>
-  <div class="section-label">生態系健康一覽</div>
-  <div class="status-grid">
-    <div class="scard" onclick="sel('aletheia')">
-      <div class="scard-repo">Aletheia</div><div class="scard-role">知識層</div>
-      <div class="scard-score" style="color:var(--orange)">82%</div>
-      <div class="scard-note" style="color:var(--red)">⚠ QMD 未安裝</div>
-    </div>
-    <div class="scard" onclick="sel('pantheon')">
-      <div class="scard-repo">project-pantheon</div><div class="scard-role">執行層</div>
-      <div class="scard-score" style="color:var(--yellow)">82%</div>
-      <div class="scard-note" style="color:var(--red)">⚠ openmemory 69天</div>
-    </div>
-    <div class="scard" onclick="sel('agent-config')">
-      <div class="scard-repo">agent-config</div><div class="scard-role">神經系統</div>
-      <div class="scard-score" style="color:var(--yellow)">46%</div>
-      <div class="scard-note" style="color:var(--yellow)">2 open issues</div>
-    </div>
-    <div class="scard" onclick="sel('gstar')">
-      <div class="scard-repo">starred-review</div><div class="scard-role">工具雷達</div>
-      <div class="scard-score" style="color:var(--green)">82%</div>
-      <div class="scard-note" style="color:var(--green)">✓ 今天執行</div>
-    </div>
-    <div class="scard" onclick="sel('raphael')">
-      <div class="scard-repo">raphael</div><div class="scard-role">顧問層</div>
-      <div class="scard-score" style="color:var(--red)">66%</div>
-      <div class="scard-note" style="color:var(--red)">⚠ MCP 全空白</div>
-    </div>
-  </div>
+<div id="status" class="tab-content active">
+<h2>生態系狀態表</h2>
+<table>
+<tr><th>Repo</th><th>角色</th><th>最後活躍</th><th>健康度</th><th>缺失連線</th><th>優先度</th></tr>
+<tr><td><b>project-pantheon</b></td><td>Agent 指揮中心</td><td>9天前</td><td class="orange">67%</td><td class="red">openmemory→claude-mem ⚠️</td><td class="red">🔴 緊急</td></tr>
+<tr><td><b>Aletheia</b></td><td>個人知識引擎</td><td>9天前</td><td class="orange">67%</td><td class="red">QMD 未安裝</td><td class="red">🔴 緊急</td></tr>
+<tr><td><b>raphael</b></td><td>全知顧問</td><td>4天前</td><td class="orange">74%</td><td class="red">.mcp.json 完全空白</td><td class="red">🔴 緊急</td></tr>
+<tr><td><b>agent-config</b></td><td>神經系統</td><td>5天前</td><td class="red">46%</td><td class="orange">缺 requirements / .env / SKILL</td><td class="orange">🟠 高</td></tr>
+<tr><td><b>starred-review</b></td><td>工具雷達</td><td>今天 ✅</td><td class="green">92%</td><td>—</td><td class="green">🟢 低</td></tr>
+</table>
+<h2>健康指數趨勢</h2>
+<table>
+<tr><th>日期</th><th>Pantheon</th><th>Aletheia</th><th>agent-config</th><th>starred-review</th><th>Raphael</th><th>整體</th></tr>
+<tr><td>2026-06-09</td><td>82%</td><td>82%</td><td>46%</td><td>82%</td><td>66%</td><td>71.6%</td></tr>
+<tr style="background:#1c2128"><td><b>2026-06-14</b></td><td class="orange">67%</td><td class="orange">67%</td><td class="red">46%</td><td class="green">92%</td><td class="orange">74%</td><td class="red"><b>69.2% ↓</b></td></tr>
+</table>
 </div>
 
-<!-- ═══════════ VIEW: SPRINT ═══════════ -->
-<div class="view" id="view-sprint">
-  <div class="sprint-wrap">
-    <div class="sprint-title">🚀 Stage 2 Sprint <span style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-left:8px">60% 完成</span></div>
-    <div class="sprint-sub">目標：GCP 多租戶部署完成 + openmemory 替換 + Aletheia QMD 上線</div>
-    <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
-    <div class="sprint-items">
-      <div class="sprint-item">
-        <div class="sprint-dot s-done">✓</div>
-        <div class="sprint-text">GitNexus 整合（AGENTS.md，999 symbols indexed）<span>已完成</span></div>
-        <div class="sprint-badge p-l">完成</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-done">✓</div>
-        <div class="sprint-text">.env.example 加入 GITHUB_TOKEN / GITHUB_USERNAME<span>已完成</span></div>
-        <div class="sprint-badge p-l">完成</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-done">✓</div>
-        <div class="sprint-text">agent-config Gstar + eSystem skills registry 建立<span>今天完成</span></div>
-        <div class="sprint-badge p-l">完成</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-done">✓</div>
-        <div class="sprint-text">raphael repo 建立（system_prompt + RAPHAEL_CORE）<span>今天完成</span></div>
-        <div class="sprint-badge p-l">完成</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-crit">!</div>
-        <div class="sprint-text">替換 openmemory → thedotmack/claude-mem（Pantheon .mcp.json）<span>本週</span></div>
-        <div class="sprint-badge p-c">🔴 緊急</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-crit">!</div>
-        <div class="sprint-text">安裝 Aletheia QMD — RAG pipeline 前置條件<span>本週</span></div>
-        <div class="sprint-badge p-c">🔴 緊急</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-high">↑</div>
-        <div class="sprint-text">補全 Raphael .mcp.json（Aletheia + Gmail + Calendar）<span>下週</span></div>
-        <div class="sprint-badge p-h">🟠 高</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-high">↑</div>
-        <div class="sprint-text">整合 upstash/context7 進 Pantheon agent context 管理<span>Stage 2 後段</span></div>
-        <div class="sprint-badge p-h">🟠 高</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-med">–</div>
-        <div class="sprint-text">補全 agent-config requirements.txt + .hermes.env.example<span>下週</span></div>
-        <div class="sprint-badge p-m">🟡 中</div>
-      </div>
-      <div class="sprint-item">
-        <div class="sprint-dot s-tgt">🎯</div>
-        <div class="sprint-text">GCP 多租戶部署完成 — Stage 2 收官里程碑<span>Stage 2 結束</span></div>
-        <div class="sprint-badge" style="background:rgba(59,130,246,0.1);color:var(--accent);border:1px solid rgba(59,130,246,0.3)">目標</div>
-      </div>
-    </div>
-  </div>
+<div id="chain" class="tab-content">
+<h2>因果鏈 & 依賴缺口</h2>
+<div class="chain">
+<span class="ok">[Gstar]</span> ──星標評估──▶ <span class="ok">[agent-config]</span> ──配置同步──▶ 所有 repos
 
-  <div class="sprint-wrap" style="border-color:var(--dim);opacity:0.6">
-    <div class="sprint-title" style="color:var(--muted)">🔮 Stage 3 Preview <span style="font-size:10px;color:var(--muted);font-family:var(--sans);font-weight:400">尚未開始</span></div>
-    <div class="sprint-sub">目標：5 specialized agents + cross-agent debate/consensus 機制</div>
-    <div class="sprint-items">
-      <div class="sprint-item" style="opacity:0.6">
-        <div class="sprint-dot s-future">–</div>
-        <div class="sprint-text">LangGraph vs CrewAI 架構決策<span>Stage 3 前</span></div>
-      </div>
-      <div class="sprint-item" style="opacity:0.6">
-        <div class="sprint-dot s-future">–</div>
-        <div class="sprint-text">5 specialized agents 設計（creative · analytical · multimodal · real-time · research）<span>Stage 3</span></div>
-      </div>
-      <div class="sprint-item" style="opacity:0.6">
-        <div class="sprint-dot s-future">–</div>
-        <div class="sprint-text">Cross-agent debate / consensus 機制（參考 TauricResearch/TradingAgents）<span>Stage 3</span></div>
-      </div>
-      <div class="sprint-item" style="opacity:0.6">
-        <div class="sprint-dot s-future">–</div>
-        <div class="sprint-text">Raphael Telegram 自動週報觸發（.mcp.json 完成後啟用）<span>Stage 3</span></div>
-      </div>
-    </div>
-  </div>
+<span class="gap">[Aletheia]</span> ──<span class="gap">✗ QMD 未裝</span>──▶ <span class="gap">[Raphael]</span> ──<span class="gap">✗ .mcp.json空</span>──▶ Calendar/Gmail
+
+                                            <span class="ok">[Vernon]</span> ──指令──▶ <span class="warn">[Pantheon]</span>
+                                                                              <span class="gap">⚠️ openmemory inactive</span>
+
+<span class="gap">❌ 紅色斷線：</span>
+  Aletheia ─✗─ Raphael（QMD MCP 未連）
+  Raphael ─✗─ Calendar/Gmail（.mcp.json 空）
+  Pantheon ─✗─ 記憶持久化（openmemory 74天無更新）
+</div>
 </div>
 
-<!-- ═══════════ VIEW: TREND ═══════════ -->
-<div class="view" id="view-trend">
-  <div class="trend-wrap">
-    <div class="section-label">健康指數趨勢 — 每次 eSystem 執行後自動更新</div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px">
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:6px">PROJECT-PANTHEON</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--yellow)">82%</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:3px">基準線</div>
-      </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:6px">ALETHEIA</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--orange)">82%</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:3px">基準線</div>
-      </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:6px">AGENT-CONFIG</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--yellow)">46%</div>
-        <div style="font-size:10px;color:var(--yellow);margin-top:3px">⚠ 最低</div>
-      </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:6px">STARRED-REVIEW</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--green)">82%</div>
-        <div style="font-size:10px;color:var(--green);margin-top:3px">✓ 健康</div>
-      </div>
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:6px">RAPHAEL</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--red)">66%</div>
-        <div style="font-size:10px;color:var(--red);margin-top:3px">⚠ 新建</div>
-      </div>
-    </div>
-    <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:20px">
-      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:12px">整體趨勢折線（HEALTH_TREND.json · 最近 20 次）</div>
-      <div id="trendChartArea" class="trend-chart-area">
-        <canvas id="trendCanvas" width="900" height="120" style="width:100%;height:120px"></canvas>
-      </div>
-    </div>
-    <div style="margin-top:16px;font-size:11px;color:var(--muted);font-family:var(--mono)">
-      📁 HEALTH_TREND.json 儲存於 salafadidas/starred-review · 每次 eSystem 執行自動追加 · 保留最近 20 筆
-    </div>
-  </div>
+<div id="sprint" class="tab-content">
+<h2>Stage 2 Sprint 時間軸</h2>
+<div class="sprint-bar">Stage 2 Progress ████████████░░░░░░░░ 55%
+
+✅ GitNexus 整合（完成）
+✅ .env.example GITHUB_TOKEN（完成）
+✅ eSystem v2.0 HTML Blueprint（完成）
+✅ HEALTH_TREND.json 基線（71.6%）
+
+🔴 openmemory → claude-mem 替換【本週】
+🔴 Aletheia QMD RAG 安裝【本週 Claude Code】
+🔴 Raphael .mcp.json 補全（Hermes Phase 1）【本週】
+🟠 upstash/context7 整合 Aletheia【下週】
+🟠 rtk token 降耗試裝【下週】
+🎯 GCP 多租戶部署【Stage 2 結束】
+
+Stage 3 Preview（尚未開始）
+◯ LangGraph vs CrewAI 架構決策
+◯ 5 specialized agents 部署
+◯ Cross-agent consensus 機制</div>
 </div>
 
-<!-- ═══════════ VIEW: ACTIONS ═══════════ -->
-<div class="view" id="view-actions">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:32px">
-    <table class="atable">
-      <thead><tr>
-        <th>#</th><th>動作</th><th>目標 Repo</th><th>方法</th><th>風險</th><th>優先度</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--red)">01</td>
-          <td>替換 openmemory → thedotmack/claude-mem</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">project-pantheon/.mcp.json</td>
-          <td>Claude Code session，移除 localhost:8080，安裝 claude-mem MCP server</td>
-          <td style="color:var(--red);font-size:11px">遷移中記憶層暫時中斷</td>
-          <td><span class="pbadge p-c">本週 🔴</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--red)">02</td>
-          <td>安裝 Aletheia QMD（RAG pipeline 前置條件）</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Aletheia/</td>
-          <td>pip install qmd-retriever，初始化索引，接通 Notion sync</td>
-          <td style="color:var(--red);font-size:11px">QMD 未裝 = Raphael 底座空白</td>
-          <td><span class="pbadge p-c">本週 🔴</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--orange)">03</td>
-          <td>補全 Raphael .mcp.json</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">raphael/.mcp.json</td>
-          <td>參考 .mcp.example.json，配置 Aletheia filesystem + Gmail + Calendar MCP</td>
-          <td style="color:var(--orange);font-size:11px">有大腦無手腳，無法行動</td>
-          <td><span class="pbadge p-h">下週 🟠</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--orange)">04</td>
-          <td>整合 upstash/context7 進 Pantheon</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">project-pantheon/</td>
-          <td>LangGraph native adapter，解決 context window 管理缺口</td>
-          <td style="color:var(--muted);font-size:11px">需 Upstash 帳戶，有使用成本</td>
-          <td><span class="pbadge p-h">Stage 2 後段 🟠</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--yellow)">05</td>
-          <td>補全 agent-config requirements.txt + .hermes.env.example</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">agent-config/</td>
-          <td>新增兩個缺失檔案，關閉 2 個 open issues</td>
-          <td style="color:var(--muted);font-size:11px">低風險</td>
-          <td><span class="pbadge p-m">下週 🟡</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--yellow)">06</td>
-          <td>安裝 mattpocock/skills + addyosmani/agent-skills 各 4-5 個</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Pantheon + Aletheia CLAUDE.md</td>
-          <td>選最相關 skill，加入 CLAUDE.md，無架構風險</td>
-          <td style="color:var(--muted);font-size:11px">需逐一確認相容性</td>
-          <td><span class="pbadge p-m">下週 🟡</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--green)">07</td>
-          <td>LangGraph vs CrewAI 架構決策</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Pantheon Stage 3</td>
-          <td>深度評估 crewAIInc/crewAI + msitarzewski/agency-agents</td>
-          <td style="color:var(--muted);font-size:11px">Phase 3 前完成即可</td>
-          <td><span class="pbadge p-l">Phase 3 前 🟢</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);color:var(--green)">08</td>
-          <td>配置 Raphael Telegram 自動週報觸發</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">agent-config GitHub Actions</td>
-          <td>每週五 UTC 10:00 cron，eSystem → Raphael MCP → Telegram push</td>
-          <td style="color:var(--muted);font-size:11px">需 Raphael .mcp.json 先完成</td>
-          <td><span class="pbadge p-l">Stage 3 🟢</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div id="actions" class="tab-content">
+<h2>本週最優先 3 個行動</h2>
+<table>
+<tr><th>#</th><th>行動</th><th>目標 Repo</th><th>預估時間</th><th>解鎖效果</th></tr>
+<tr><td class="red"><b>1</b></td><td class="red">替換 openmemory → claude-mem</td><td>project-pantheon</td><td>1-2小時</td><td>Pantheon 記憶恢復正常</td></tr>
+<tr><td class="red"><b>2</b></td><td class="red">Aletheia QMD RAG 安裝</td><td>Aletheia</td><td>Claude Code session</td><td>知識引擎啟動，Raphael 可連接</td></tr>
+<tr><td class="red"><b>3</b></td><td class="red">Raphael .mcp.json 補全</td><td>raphael</td><td>2-3小時</td><td>eSystem Step 7 Telegram 推送啟用</td></tr>
+</table>
 </div>
 
-<!-- ═══════════ VIEW: GSTAR ═══════════ -->
-<div class="view" id="view-gstar">
-  <div class="section-label">Gstar Top 工具 × eSystem 缺口對應</div>
-  <div class="gstar-row">
-    <div class="gcard">
-      <div class="g-score">100</div>
-      <div class="g-repo">thedotmack/claude-mem</div>
-      <div class="g-gap">填補 Pantheon openmemory 停更缺口 🔴</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">96</div>
-      <div class="g-repo">upstash/context7</div>
-      <div class="g-gap">填補 Pantheon context window 管理缺口 🟠</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">93</div>
-      <div class="g-repo">NousResearch/hermes-agent</div>
-      <div class="g-gap">填補 Raphael 主體引擎缺口 🔴</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">92</div>
-      <div class="g-repo">paperclipai/paperclip</div>
-      <div class="g-gap">強化 Aletheia PDF ingestion pipeline 🟠</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">88</div>
-      <div class="g-repo">rtk-ai/rtk</div>
-      <div class="g-gap">填補 Aletheia + Pantheon live data 缺口 🟡</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">85</div>
-      <div class="g-repo">crewAIInc/crewAI</div>
-      <div class="g-gap">Stage 3 LangGraph vs CrewAI 決策依據 🟢</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">85</div>
-      <div class="g-repo">addyosmani/agent-skills</div>
-      <div class="g-gap">直接強化 Pantheon + Aletheia Claude Code workflow 🟡</div>
-    </div>
-    <div class="gcard">
-      <div class="g-score">83</div>
-      <div class="g-repo">mattpocock/skills</div>
-      <div class="g-gap">122k stars，architecture-review + debug skills 🟡</div>
-    </div>
-  </div>
-
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
-    <div class="section-label">完整工具缺口矩陣</div>
-    <table class="atable">
-      <thead><tr>
-        <th>Gstar 工具</th><th>分數</th><th>填補缺口</th><th>整合進</th><th>時機</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">thedotmack/claude-mem</td>
-          <td><span class="pbadge p-c">100/100</span></td>
-          <td>Pantheon: openmemory 停更 69天 → 直接替換</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Pantheon .mcp.json</td>
-          <td><span class="pbadge p-c">本週 🔴</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">NousResearch/hermes-agent</td>
-          <td><span class="pbadge p-c">93/100</span></td>
-          <td>Raphael: Hermes Agent 主體引擎，缺此無法啟動</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">raphael/ 核心</td>
-          <td><span class="pbadge p-c">本週 🔴</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">upstash/context7</td>
-          <td><span class="pbadge" style="background:rgba(6,182,212,0.1);color:var(--accent2);border:1px solid rgba(6,182,212,0.3)">96/100</span></td>
-          <td>Pantheon + Aletheia: context window 管理，LangGraph adapter 已就緒</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Pantheon agent loop</td>
-          <td><span class="pbadge p-h">Stage 2 後段 🟠</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">paperclipai/paperclip</td>
-          <td><span class="pbadge p-h">92/100</span></td>
-          <td>Aletheia: 補強 PDF ingestion，QMD 安裝後銜接</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Aletheia ingestion</td>
-          <td><span class="pbadge p-h">下週 🟠</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">rtk-ai/rtk</td>
-          <td><span class="pbadge p-m">88/100</span></td>
-          <td>Aletheia + Pantheon: real-time 知識更新，Redis stack 深度整合</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">兩者 MCP layer</td>
-          <td><span class="pbadge p-m">Stage 2 後段 🟡</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">addyosmani/agent-skills + mattpocock/skills</td>
-          <td><span class="pbadge p-m">84/100</span></td>
-          <td>Pantheon + Aletheia: 強化 Claude Code workflow，無架構風險</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">CLAUDE.md skills</td>
-          <td><span class="pbadge p-m">下週 🟡</span></td>
-        </tr>
-        <tr>
-          <td style="font-family:var(--mono);font-size:11px">crewAIInc/crewAI + msitarzewski/agency-agents</td>
-          <td><span class="pbadge p-l">85/100</span></td>
-          <td>Pantheon Phase 3: LangGraph vs CrewAI 決策，debate/consensus 機制參考</td>
-          <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">Pantheon Stage 3</td>
-          <td><span class="pbadge p-l">Phase 3 前 🟢</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div id="gstar" class="tab-content">
+<h2>Gstar × eSystem 工具缺口對應</h2>
+<table>
+<tr><th>Gstar Top 工具</th><th>分數</th><th>填補缺口</th><th>目標 Repo</th><th>建議行動</th></tr>
+<tr><td><b>thedotmack/claude-mem</b></td><td class="green">100/100</td><td>openmemory 替換</td><td>Pantheon</td><td class="red">本週執行</td></tr>
+<tr><td><b>NousResearch/hermes-agent</b></td><td class="green">97/100</td><td>Raphael Phase 1 核心</td><td>Raphael</td><td class="red">本週開始</td></tr>
+<tr><td><b>upstash/context7</b></td><td>94/100</td><td>Aletheia QMD 補強</td><td>Aletheia</td><td class="orange">下週整合</td></tr>
+<tr><td><b>rtk-ai/rtk</b></td><td>88/100</td><td>全生態系 token 降耗</td><td>Pantheon+Aletheia</td><td class="orange">下週試裝</td></tr>
+<tr><td><b>anthropics/skills</b></td><td>86/100</td><td>agent-config skill 模板</td><td>agent-config</td><td>本週研究</td></tr>
+</table>
 </div>
-
-</main>
 
 <script>
-// ── Tab switching ──
-function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('view-' + name).classList.add('active');
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
-  if (name === 'trend') drawTrend();
-}
-
-// ── Node detail data ──
-const nodeData = {
-  gstar: {
-    title: '🔭 starred-review / Gstar', color: 'var(--accent2)',
-    blocks: [
-      { label: '角色', items: ['工具探索雷達，每月掃描全部 starred repos', '發現生態系缺少的工具', 'Gstar → eSystem 串接入口'] },
-      { label: '本次執行結果', items: ['60 repos 完成（+17 新增）', 'openmemory inactive 警報持續（69天）', 'thedotmack/claude-mem 評分 100/100'] },
-      { label: '健康指數 82%', items: ['✓ SKILL.md 存在', '✓ .env.example 完整', '✓ CLAUDE.md 完整', '✓ 今天執行'] },
-      { label: '下一步', items: ['下月 7 日前執行下次 Gstar', '考慮 GitHub Actions 自動觸發', 'HEALTH_TREND.json 每次自動更新'] },
-    ]
-  },
-  aletheia: {
-    title: '🧠 Aletheia — 個人知識引擎', color: 'var(--red)',
-    blocks: [
-      { label: '角色', items: ['Raphael 與 Pantheon 的知識查詢底座', '處理個人 PDF · 書籍 · 課程 · Notion 筆記', 'QMD（BM25 + vector + reranking）作為 RAG 核心'] },
-      { label: '🔴 關鍵缺口', items: ['⚠ QMD 未安裝 — RAG pipeline 完全不可用', '⚠ mem0 整合待完成 — 長期記憶層缺失', '⚠ SKILL.md 缺 — Claude Code 無法自動發現'] },
-      { label: '已完成', items: ['✓ FastAPI + LiteLLM 架構就緒', '✓ .mcp.json 已配置（filesystem + github）', '✓ markitdown 文件 ingestion pipeline', '✓ .env.example 含 GITHUB_TOKEN'] },
-      { label: '下一步（本週）', items: ['開 Claude Code session', 'pip install qmd-retriever', '初始化 QMD 索引，接通 Notion sync'] },
-    ]
-  },
-  raphael: {
-    title: '⚡ Raphael — 全知顧問 AI', color: 'var(--red)',
-    blocks: [
-      { label: '角色', items: ['Hermes Agent 實例，作為 Vernon 的 AI 顧問', '整合 Aletheia 知識 + Calendar + Gmail + GitHub', '提供決策建議 → Vernon 下指令給 Pantheon'] },
-      { label: '🔴 關鍵缺口', items: ['⚠ .mcp.json 空白 — 無法連接任何外部工具', '⚠ requirements.txt 缺 — 依賴不明確', '⚠ SKILL.md 缺 — 能力無法被發現'] },
-      { label: '今天已建立', items: ['✓ CLAUDE.md 完整', '✓ system_prompt.md 存在', '✓ RAPHAEL_CORE.md 存在', '✓ .mcp.example.json 有模板'] },
-      { label: '下一步（下週）', items: ['參考 .mcp.example.json 補全 .mcp.json', '配置 Aletheia filesystem MCP', 'Gmail + Calendar MCP（等 QMD 完成後）'] },
-    ]
-  },
-  vernon: {
-    title: '👤 Vernon — 決策核心', color: 'var(--accent)',
-    blocks: [
-      { label: '在生態系中的角色', items: ['接收 Raphael 建議並做最終決策', '下指令給 Pantheon 執行', '定期執行 Gstar + eSystem 健康檢查'] },
-      { label: '當前工作流', items: ['Claude.ai Chat：Gstar + eSystem 執行', 'Claude Code：Pantheon / Aletheia 開發', 'NotebookLM Solo Upgrade：session 記錄'] },
-      { label: '建議改進', items: ['將 GITHUB_TOKEN 存入 .env，不要每次貼入對話', '設定 Gstar 月度提醒（每月 7 日）', '待 Raphael 完成後由其自動推送週報'] },
-      { label: 'eSystem 觸發方式', items: ['「請執行 eSystem，GITHUB_TOKEN 是 ghp_...」', 'Raphael 完成後：每週五自動推送 Telegram', 'Gstar 完成後自動串接執行'] },
-    ]
-  },
-  pantheon: {
-    title: '🏛️ project-pantheon — Agent 指揮中心', color: 'var(--orange)',
-    blocks: [
-      { label: '角色', items: ['LangGraph multi-agent 執行引擎', 'Telegram bot 入口（multi-tenant）', 'GCP Cloud Run 雲端部署，Stage 2 進行中'] },
-      { label: '🟠 關鍵缺口', items: ['⚠ openmemory 停更 69天 — memory MCP 靜默失敗風險', '⚠ SKILL.md 缺 — Claude Code 無法自動發現'] },
-      { label: '已完成', items: ['✓ GitNexus 整合（AGENTS.md，999 symbols）', '✓ CLAUDE.md + .mcp.json + requirements.txt 完整', '✓ .env.example 含 GITHUB_TOKEN', '✓ Stage 2 sprint 進行中'] },
-      { label: '下一步（本週）', items: ['替換 openmemory → thedotmack/claude-mem', '更新 .mcp.json：移除 localhost:8080', 'Stage 2 完成 GCP 多租戶部署'] },
-    ]
-  },
-  'agent-config': {
-    title: '⚙️ agent-config — 神經系統', color: 'var(--yellow)',
-    blocks: [
-      { label: '角色', items: ['Single Source of Truth for MCP / skill / agent 配置', 'GitHub Actions Reusable Workflows', 'UTC 18:00 每日自動掃描新 repo'] },
-      { label: '🟡 待補強', items: ['⚠ requirements.txt 缺（健康度最低 46%）', '⚠ .env.example 缺', '⚠ 2 個 open issues 未處理', '⚠ raphael 配置模板未建立'] },
-      { label: '今天更新', items: ['✓ Gstar + eSystem skills registry 已加入', '✓ event-triggered project bootstrap 完成', '✓ project governance checker 完成'] },
-      { label: '下一步', items: ['新增 requirements.txt', '新增 .hermes.env.example for Raphael', '關閉 2 個 open issues'] },
-    ]
-  },
-  output: {
-    title: '📤 Output Layer', color: 'var(--green)',
-    blocks: [
-      { label: '產出類型', items: ['Email drafts（Pantheon → Gmail）', 'Telegram 通知（Pantheon bot）', 'n8n automation flows', 'Gstar / eSystem 報告（→ starred-review）'] },
-      { label: '現況', items: ['n8n-workflows fork 已同步（+4,024 stars↑↑）', 'Pantheon Telegram bot 部署中（Stage 2）', 'ECOSYSTEM_BLUEPRINT.html 每次自動更新'] },
-      { label: '完成後擴展', items: ['Pantheon Stage 2 部署後 output 路徑完整啟動', 'Raphael MCP 補全後可自動推送每週建議', 'paperclipai/paperclip 強化文件輸出'] },
-      { label: '未來', items: ['每週五 UTC 10:00 Raphael → Telegram 自動週報'] },
-    ]
-  },
-};
-
-function sel(id) {
-  document.querySelectorAll('.node,.scard,.side-node').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll(`[data-id="${id}"]`).forEach(n => n.classList.add('active'));
-  const data = nodeData[id];
-  if (!data) return;
-  const panel = document.getElementById('detailPanel');
-  panel.classList.remove('empty');
-  panel.innerHTML = `
-    <div class="detail-title" style="color:${data.color}">${data.title}</div>
-    <div class="detail-grid">
-      ${data.blocks.map(b => `
-        <div class="dblock">
-          <div class="dblock-label">${b.label}</div>
-          <div class="dblock-body">
-            <ul>${b.items.map(i => `<li class="${i.startsWith('⚠')?'alert':i.startsWith('✓')?'ok':''}">${i.replace(/^[⚠✓]\s*/,'')}</li>`).join('')}</ul>
-          </div>
-        </div>`).join('')}
-    </div>`;
-}
-
-// ── Trend chart (canvas) ──
-const TREND_DATA = [
-  { date: "20260609",
-    scores: { "project-pantheon":82, "Aletheia":82, "agent-config":46, "starred-review":82, "raphael":66 },
-    overall: 71.6 }
-];
-
-function drawTrend() {
-  const canvas = document.getElementById('trendCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.offsetWidth; const H = 120;
-  canvas.width = W; canvas.height = H;
-  ctx.clearRect(0, 0, W, H);
-
-  if (TREND_DATA.length < 2) {
-    // Single point — show baseline marker
-    ctx.fillStyle = '#64748b';
-    ctx.font = '11px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('基準線已建立 71.6% — 下次執行後顯示趨勢', W/2, H/2);
-
-    // Draw single dot
-    const x = W/2, y = H - (71.6/100)*(H-20) - 10;
-    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI*2);
-    ctx.fillStyle = '#3b82f6'; ctx.fill();
-    ctx.strokeStyle = '#0b0f1a'; ctx.lineWidth = 2; ctx.stroke();
-
-    // Label
-    ctx.fillStyle = '#3b82f6'; ctx.font = '10px monospace'; ctx.textAlign = 'center';
-    ctx.fillText('71.6%', x, y-10);
-    ctx.fillStyle = '#64748b'; ctx.font = '9px monospace';
-    ctx.fillText('2026-06-09', x, H-2);
-    return;
-  }
-
-  const repos = ['project-pantheon','Aletheia','agent-config','starred-review','raphael'];
-  const colors = ['#f97316','#ef4444','#eab308','#22c55e','#3b82f6'];
-  const pad = 40;
-  const xStep = TREND_DATA.length > 1 ? (W - pad*2)/(TREND_DATA.length-1) : 0;
-
-  // Grid lines
-  [25,50,75,100].forEach(v => {
-    const y = H - (v/100)*(H-30)-10;
-    ctx.strokeStyle = 'rgba(51,65,85,0.4)'; ctx.lineWidth = 1;
-    ctx.setLineDash([3,4]);
-    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W-pad, y); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#334155'; ctx.font = '9px monospace'; ctx.textAlign = 'right';
-    ctx.fillText(v+'%', pad-4, y+3);
-  });
-
-  // Overall line
-  ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
-  ctx.beginPath();
-  TREND_DATA.forEach((d,i) => {
-    const x = pad + i*xStep;
-    const y = H - (d.overall/100)*(H-30)-10;
-    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-  });
-  ctx.stroke(); ctx.setLineDash([]);
-
-  // Per-repo lines
-  repos.forEach((r,ri) => {
-    ctx.strokeStyle = colors[ri]; ctx.lineWidth = 1; ctx.globalAlpha = 0.5;
-    ctx.beginPath();
-    TREND_DATA.forEach((d,i) => {
-      const x = pad + i*xStep;
-      const y = H - ((d.scores[r]||0)/100)*(H-30)-10;
-      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    });
-    ctx.stroke(); ctx.globalAlpha = 1;
-  });
-
-  // Overall dots + labels
-  TREND_DATA.forEach((d,i) => {
-    const x = pad + i*xStep;
-    const y = H - (d.overall/100)*(H-30)-10;
-    ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI*2);
-    ctx.fillStyle = '#3b82f6'; ctx.fill();
-    ctx.strokeStyle = '#0b0f1a'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.fillStyle = '#e2e8f0'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
-    ctx.fillText(d.overall+'%', x, y-8);
-    ctx.fillStyle = '#64748b';
-    const label = d.date.slice(4,6)+'/'+d.date.slice(6,8);
-    ctx.fillText(label, x, H-2);
-  });
 }
 </script>
 </body>
