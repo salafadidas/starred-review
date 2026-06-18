@@ -20,5 +20,17 @@
       "raphael": 74
     },
     "overall": 69.2
+  },
+  {
+    "date": "20260618",
+    "scores": {
+      "project-pantheon": 82,
+      "Aletheia": 82,
+      "agent-config": 46,
+      "ecosystem-blueprint": 92,
+      "starred-review": 92,
+      "raphael": 74
+    },
+    "overall": 78.0
   }
 ]
