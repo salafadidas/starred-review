@@ -12,3 +12,6 @@ Vernon 的 GitHub 星標評估報告庫。
 ## Skill 位置
 - Gstar SKILL.md: 本 repo 根目錄
 - eSystem SKILL.md: salafadidas/ecosystem-blueprint
+
+
+Latest: [STARRED_REVIEW_v20260618.md](STARRED_REVIEW_v20260618.md)
