@@ -2,131 +2,293 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>Ecosystem Blueprint — 2026-06-14</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vernon's AI Ecosystem Blueprint — 2026-06-18</title>
 <style>
-body{font-family:-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;margin:0;padding:20px}
-h1{color:#58a6ff;border-bottom:1px solid #30363d;padding-bottom:10px}
-h2{color:#79c0ff;margin-top:30px}
-.header-bar{display:flex;justify-content:space-between;align-items:center;background:#161b22;padding:15px 20px;border-radius:8px;margin-bottom:20px;border:1px solid #30363d}
-.health-badge{font-size:1.4em;font-weight:bold}
-.down{color:#f85149}.up{color:#3fb950}.flat{color:#d29922}
-table{width:100%;border-collapse:collapse;margin:15px 0}
-th{background:#161b22;color:#58a6ff;padding:10px;text-align:left;border:1px solid #30363d}
-td{padding:10px;border:1px solid #30363d;vertical-align:top}
-tr:nth-child(even){background:#161b22}
-.red{color:#f85149;font-weight:bold}.orange{color:#d29922}.green{color:#3fb950}
-.tabs{display:flex;gap:5px;margin-bottom:20px}
-.tab{padding:8px 16px;background:#161b22;border:1px solid #30363d;border-radius:6px;cursor:pointer;color:#8b949e}
-.tab.active{background:#1f6feb;color:white;border-color:#1f6feb}
-.tab-content{display:none}.tab-content.active{display:block}
-.sprint-bar{background:#21262d;border-radius:8px;padding:15px;margin:10px 0;font-family:monospace;white-space:pre-line;line-height:1.8}
-.chain{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;font-family:monospace;white-space:pre-line;line-height:2}
-.gap{color:#f85149}.ok{color:#3fb950}.warn{color:#d29922}
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --accent: #58a6ff; --green: #3fb950; --orange: #f0883e;
+    --red: #f85149; --purple: #bc8cff; --text: #e6edf3;
+    --muted: #8b949e; --card: #21262d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 1.6rem; color: var(--accent); margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .card h3 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .stat { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .stat:last-child { border-bottom: none; }
+  .stat-label { font-size: 0.88rem; }
+  .stat-value { font-size: 0.88rem; font-weight: 600; }
+  .badge { padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+  .badge-green { background: rgba(63,185,80,0.15); color: var(--green); }
+  .badge-orange { background: rgba(240,136,62,0.15); color: var(--orange); }
+  .badge-red { background: rgba(248,81,73,0.15); color: var(--red); }
+  .badge-purple { background: rgba(188,140,255,0.15); color: var(--purple); }
+  .badge-blue { background: rgba(88,166,255,0.15); color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th { background: var(--surface); color: var(--muted); text-align: left; padding: 8px 10px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .section-title { font-size: 1rem; font-weight: 600; color: var(--accent); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+  .trend-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .trend-fill { height: 6px; border-radius: 3px; background: var(--green); }
+  .trend-fill.warn { background: var(--orange); }
+  .trend-fill.critical { background: var(--red); }
+  .health-big { font-size: 2.5rem; font-weight: 700; color: var(--green); }
+  .health-prev { color: var(--muted); font-size: 0.85rem; }
+  .arrow-up { color: var(--green); }
+  .arrow-down { color: var(--red); }
+  .causal-chain { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; font-family: monospace; font-size: 0.82rem; line-height: 1.8; overflow-x: auto; }
+  .node { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; margin: 2px; }
+  .node.active { border-color: var(--green); color: var(--green); }
+  .node.warn { border-color: var(--orange); color: var(--orange); }
+  .node.critical { border-color: var(--red); color: var(--red); }
+  .node.infra { border-color: var(--purple); color: var(--purple); }
+  .sprint-bar { height: 20px; background: var(--surface); border-radius: 10px; overflow: hidden; margin: 8px 0; }
+  .sprint-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); border-radius: 10px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 0.7rem; font-weight: 600; color: white; }
+  .gap-item { padding: 8px 12px; margin: 4px 0; border-left: 3px solid var(--red); background: rgba(248,81,73,0.05); border-radius: 0 6px 6px 0; font-size: 0.85rem; }
+  .gap-item.warn { border-color: var(--orange); background: rgba(240,136,62,0.05); }
+  .full-width { grid-column: 1 / -1; }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="header-bar">
-  <div>
-    <h1 style="margin:0;border:none">🌐 Ecosystem Blueprint</h1>
-    <small>salafadidas · 更新：2026-06-14</small>
+
+<h1>🧠 Vernon's AI Ecosystem Blueprint</h1>
+<p class="subtitle">eSystem v2.1.0 · 執行時間: 2026-06-18 · 上次: 2026-06-14 · Gstar 串接: ✅</p>
+
+<div class="grid">
+  <!-- Health Score -->
+  <div class="card">
+    <h3>整體健康指數</h3>
+    <div style="text-align:center; padding: 16px 0;">
+      <div class="health-big">78.0%</div>
+      <div class="health-prev">↑ 上次: 69.2% <span class="arrow-up">+8.8 ↑↑</span></div>
+      <div style="margin-top: 8px; font-size: 0.8rem; color: var(--muted);">趨勢: 71.6 → 69.2 → <strong style="color:var(--green)">78.0</strong></div>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">project-pantheon</span>
+      <div class="trend-fill" style="width:82%"></div>
+      <span style="font-size:0.75rem; color:var(--green)">82</span>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">Aletheia</span>
+      <div class="trend-fill" style="width:82%"></div>
+      <span style="font-size:0.75rem; color:var(--green)">82</span>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">raphael</span>
+      <div class="trend-fill warn" style="width:74%"></div>
+      <span style="font-size:0.75rem; color:var(--orange)">74</span>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">starred-review</span>
+      <div class="trend-fill" style="width:92%"></div>
+      <span style="font-size:0.75rem; color:var(--green)">92</span>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">ecosystem-blueprint</span>
+      <div class="trend-fill" style="width:92%"></div>
+      <span style="font-size:0.75rem; color:var(--green)">92</span>
+    </div>
+    <div class="trend-bar">
+      <span style="font-size:0.75rem; width:140px;">agent-config</span>
+      <div class="trend-fill critical" style="width:46%"></div>
+      <span style="font-size:0.75rem; color:var(--red)">46</span>
+    </div>
   </div>
-  <div class="health-badge down">整體健康 71.6% → 69.2% ↓</div>
+
+  <!-- Sprint Progress -->
+  <div class="card">
+    <h3>Sprint 時間軸 — Stage 2</h3>
+    <div class="sprint-bar"><div class="sprint-fill" style="width:65%">65%</div></div>
+    <div style="font-size:0.82rem; line-height: 2;">
+      <div>✅ GitNexus 整合（完成）</div>
+      <div>✅ .env.example GITHUB_TOKEN 規範</div>
+      <div>✅ ecosystem-blueprint SKILL.md v2.1</div>
+      <div style="color:var(--red)">🔴 openmemory → claude-mem（本週）</div>
+      <div style="color:var(--red)">🔴 Aletheia QMD 安裝（本週）</div>
+      <div style="color:var(--red)">🔴 raphael/.mcp.json Phase 1 補全（本週）</div>
+      <div style="color:var(--orange)">🟠 rtk token 節省測試（下週）</div>
+      <div style="color:var(--orange)">🟠 context7 整合（Stage 2 後段）</div>
+      <div style="color:var(--muted)">🎯 GCP 多租戶部署（Stage 2 結束）</div>
+    </div>
+    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);">
+      Stage 3 Preview: LangGraph vs crewAI 決策 · 5 specialized agents · Cross-agent consensus
+    </div>
+  </div>
 </div>
 
-<div class="tabs">
-  <div class="tab active" onclick="showTab('status')">📊 生態系狀態</div>
-  <div class="tab" onclick="showTab('chain')">🔗 因果鏈</div>
-  <div class="tab" onclick="showTab('sprint')">🚀 Sprint 時間軸</div>
-  <div class="tab" onclick="showTab('actions')">⚡ 優先行動</div>
-  <div class="tab" onclick="showTab('gstar')">🌟 Gstar 整合</div>
+<!-- Causal Chain -->
+<div class="section-title">🔗 因果鏈架構</div>
+<div class="causal-chain">
+<span class="node infra">⚙️ agent-config</span> (神經系統 — 治理 & 配置同步)
+    ↓
+<span class="node active">🔭 starred-review / Gstar</span> (工具發現雷達) → 今日: 90 repos, Top 20 分析完成
+    ↓
+<span class="node warn">🧠 Aletheia</span> (知識底座) ← Obsidian · Notion · markitdown · QMD [🔴 QMD 待安裝]
+    ↓ MCP
+<span class="node warn">👁️ raphael / Hermes</span> (全知顧問) ← Calendar · Gmail · GitHub [🔴 .mcp.json 待補全]
+    ↓ 建議
+<span class="node active">👤 Vernon</span> (決策)
+    ↓ 指令
+<span class="node active">⚡ Pantheon</span> [🔴 openmemory 待替換 → claude-mem] · <span class="node active">n8n</span> (執行層)
+    ↑
+<span class="node infra">📊 eSystem / ecosystem-blueprint</span> (稽核層)
 </div>
 
-<div id="status" class="tab-content active">
-<h2>生態系狀態表</h2>
+<!-- Ecosystem Status Table -->
+<div class="section-title">📊 生態系狀態表</div>
 <table>
-<tr><th>Repo</th><th>角色</th><th>最後活躍</th><th>健康度</th><th>缺失連線</th><th>優先度</th></tr>
-<tr><td><b>project-pantheon</b></td><td>Agent 指揮中心</td><td>9天前</td><td class="orange">67%</td><td class="red">openmemory→claude-mem ⚠️</td><td class="red">🔴 緊急</td></tr>
-<tr><td><b>Aletheia</b></td><td>個人知識引擎</td><td>9天前</td><td class="orange">67%</td><td class="red">QMD 未安裝</td><td class="red">🔴 緊急</td></tr>
-<tr><td><b>raphael</b></td><td>全知顧問</td><td>4天前</td><td class="orange">74%</td><td class="red">.mcp.json 完全空白</td><td class="red">🔴 緊急</td></tr>
-<tr><td><b>agent-config</b></td><td>神經系統</td><td>5天前</td><td class="red">46%</td><td class="orange">缺 requirements / .env / SKILL</td><td class="orange">🟠 高</td></tr>
-<tr><td><b>starred-review</b></td><td>工具雷達</td><td>今天 ✅</td><td class="green">92%</td><td>—</td><td class="green">🟢 低</td></tr>
+  <tr>
+    <th>排名</th><th>Repo</th><th>角色</th><th>最後活躍</th><th>健康度</th><th>缺失連線</th><th>下一個關鍵動作</th><th>優先度</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>raphael</strong></td>
+    <td>全知顧問</td>
+    <td>2026-06-14（4天前）</td>
+    <td><span class="badge badge-orange">74%</span></td>
+    <td>Hermes安裝 · Calendar/Gmail/Notion MCP · Aletheia MCP</td>
+    <td>Phase 1 安裝 Hermes，補全 .mcp.json</td>
+    <td><span class="badge badge-red">🔴 緊急</span></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Aletheia</strong></td>
+    <td>知識底座</td>
+    <td>2026-06-18（今天）🟢</td>
+    <td><span class="badge badge-orange">82%</span></td>
+    <td>QMD 安裝 · mem0 整合</td>
+    <td>QMD RAG pipeline 安裝</td>
+    <td><span class="badge badge-red">🔴 緊急</span></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>project-pantheon</strong></td>
+    <td>執行中樞</td>
+    <td>2026-06-18（今天）🟢</td>
+    <td><span class="badge badge-green">82%</span></td>
+    <td>openmemory → claude-mem 替換</td>
+    <td>替換記憶層，Stage 2 部署</td>
+    <td><span class="badge badge-orange">🟠 高</span></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>agent-config</strong></td>
+    <td>神經系統</td>
+    <td>2026-06-18（今天）🟢</td>
+    <td><span class="badge badge-red">46%</span></td>
+    <td>requirements.txt · .env.example · SKILL.md · 2 open issues</td>
+    <td>補齊缺失檔案，關閉 2 issues</td>
+    <td><span class="badge badge-orange">🟡 中</span></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>starred-review</strong></td>
+    <td>工具雷達</td>
+    <td>2026-06-18（今天）🟢</td>
+    <td><span class="badge badge-green">92%</span></td>
+    <td>—</td>
+    <td>本次 Gstar 已執行 ✅</td>
+    <td><span class="badge badge-blue">🟢 低</span></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>ecosystem-blueprint</strong></td>
+    <td>稽核層</td>
+    <td>2026-06-14（4天前）</td>
+    <td><span class="badge badge-green">92%</span></td>
+    <td>—</td>
+    <td>本次 eSystem 已執行 ✅</td>
+    <td><span class="badge badge-blue">🟢 低</span></td>
+  </tr>
 </table>
-<h2>健康指數趨勢</h2>
+
+<!-- Governance -->
+<div class="section-title">🏛️ Governance Compliance</div>
 <table>
-<tr><th>日期</th><th>Pantheon</th><th>Aletheia</th><th>agent-config</th><th>starred-review</th><th>Raphael</th><th>整體</th></tr>
-<tr><td>2026-06-09</td><td>82%</td><td>82%</td><td>46%</td><td>82%</td><td>66%</td><td>71.6%</td></tr>
-<tr style="background:#1c2128"><td><b>2026-06-14</b></td><td class="orange">67%</td><td class="orange">67%</td><td class="red">46%</td><td class="green">92%</td><td class="orange">74%</td><td class="red"><b>69.2% ↓</b></td></tr>
+  <tr><th>Repo</th><th>狀態</th><th>Drift 項目</th><th>Required Action</th></tr>
+  <tr>
+    <td>agent-config</td>
+    <td><span class="badge badge-orange">WARN</span></td>
+    <td>缺 requirements.txt, .env.example, SKILL.md · 2 open issues</td>
+    <td>補齊 3 個缺失檔案，關閉 issues</td>
+  </tr>
+  <tr>
+    <td>project-pantheon</td>
+    <td><span class="badge badge-orange">WARN</span></td>
+    <td>缺 SKILL.md · openmemory 停更 78 天</td>
+    <td>替換 openmemory → claude-mem；補 SKILL.md</td>
+  </tr>
+  <tr>
+    <td>Aletheia</td>
+    <td><span class="badge badge-orange">WARN</span></td>
+    <td>缺 SKILL.md · QMD 未安裝</td>
+    <td>安裝 QMD；補 SKILL.md</td>
+  </tr>
+  <tr>
+    <td>raphael</td>
+    <td><span class="badge badge-orange">WARN</span></td>
+    <td>缺 requirements.txt, SKILL.md · .mcp.json 僅有 github + filesystem</td>
+    <td>補全 .mcp.json Phase 1 connections；補 SKILL.md</td>
+  </tr>
+  <tr>
+    <td>starred-review</td>
+    <td><span class="badge badge-green">PASS</span></td>
+    <td>—</td>
+    <td>保持現狀</td>
+  </tr>
+  <tr>
+    <td>ecosystem-blueprint</td>
+    <td><span class="badge badge-green">PASS</span></td>
+    <td>—</td>
+    <td>保持現狀</td>
+  </tr>
 </table>
-</div>
 
-<div id="chain" class="tab-content">
-<h2>因果鏈 & 依賴缺口</h2>
-<div class="chain">
-<span class="ok">[Gstar]</span> ──星標評估──▶ <span class="ok">[agent-config]</span> ──配置同步──▶ 所有 repos
+<!-- Gap Analysis from Gstar -->
+<div class="section-title">🔌 Gstar × eSystem 工具缺口對應</div>
+<div class="gap-item">🔴 <strong>raphael/.mcp.json</strong> 空洞 → 填補方案: punkpeye/awesome-mcp-servers 目錄 + NousResearch/hermes-agent Phase 1 安裝</div>
+<div class="gap-item">🔴 <strong>Pantheon openmemory</strong> 停更 → 替換: thedotmack/claude-mem（83k stars, MCP原生）</div>
+<div class="gap-item">🔴 <strong>Aletheia QMD</strong> 未安裝 → 串接機會: Egonex-AI/Understand-Anything（知識視覺化）+ academic-research-skills（研究流程）</div>
+<div class="gap-item warn">🟠 <strong>Pantheon token 成本</strong> → rtk-ai/rtk（-60~90% token，+1.2k stars）</div>
+<div class="gap-item warn">🟠 <strong>Pantheon 情報蒐集</strong> → Panniantong/Agent-Reach（+5.2k 爆炸，今日更新）</div>
+<div class="gap-item warn">🟠 <strong>agent-config skill 規範</strong> → mattpocock/skills（+5.7k 本週最大漲幅，134k stars）</div>
 
-<span class="gap">[Aletheia]</span> ──<span class="gap">✗ QMD 未裝</span>──▶ <span class="gap">[Raphael]</span> ──<span class="gap">✗ .mcp.json空</span>──▶ Calendar/Gmail
-
-                                            <span class="ok">[Vernon]</span> ──指令──▶ <span class="warn">[Pantheon]</span>
-                                                                              <span class="gap">⚠️ openmemory inactive</span>
-
-<span class="gap">❌ 紅色斷線：</span>
-  Aletheia ─✗─ Raphael（QMD MCP 未連）
-  Raphael ─✗─ Calendar/Gmail（.mcp.json 空）
-  Pantheon ─✗─ 記憶持久化（openmemory 74天無更新）
-</div>
-</div>
-
-<div id="sprint" class="tab-content">
-<h2>Stage 2 Sprint 時間軸</h2>
-<div class="sprint-bar">Stage 2 Progress ████████████░░░░░░░░ 55%
-
-✅ GitNexus 整合（完成）
-✅ .env.example GITHUB_TOKEN（完成）
-✅ eSystem v2.0 HTML Blueprint（完成）
-✅ HEALTH_TREND.json 基線（71.6%）
-
-🔴 openmemory → claude-mem 替換【本週】
-🔴 Aletheia QMD RAG 安裝【本週 Claude Code】
-🔴 Raphael .mcp.json 補全（Hermes Phase 1）【本週】
-🟠 upstash/context7 整合 Aletheia【下週】
-🟠 rtk token 降耗試裝【下週】
-🎯 GCP 多租戶部署【Stage 2 結束】
-
-Stage 3 Preview（尚未開始）
-◯ LangGraph vs CrewAI 架構決策
-◯ 5 specialized agents 部署
-◯ Cross-agent consensus 機制</div>
-</div>
-
-<div id="actions" class="tab-content">
-<h2>本週最優先 3 個行動</h2>
+<!-- Priority Actions -->
+<div class="section-title">✅ 本次最優先 3 個行動</div>
 <table>
-<tr><th>#</th><th>行動</th><th>目標 Repo</th><th>預估時間</th><th>解鎖效果</th></tr>
-<tr><td class="red"><b>1</b></td><td class="red">替換 openmemory → claude-mem</td><td>project-pantheon</td><td>1-2小時</td><td>Pantheon 記憶恢復正常</td></tr>
-<tr><td class="red"><b>2</b></td><td class="red">Aletheia QMD RAG 安裝</td><td>Aletheia</td><td>Claude Code session</td><td>知識引擎啟動，Raphael 可連接</td></tr>
-<tr><td class="red"><b>3</b></td><td class="red">Raphael .mcp.json 補全</td><td>raphael</td><td>2-3小時</td><td>eSystem Step 7 Telegram 推送啟用</td></tr>
+  <tr><th>#</th><th>行動</th><th>目標 Repo</th><th>工具</th><th>時程</th></tr>
+  <tr>
+    <td><strong>1</strong></td>
+    <td>替換 openmemory → thedotmack/claude-mem</td>
+    <td>project-pantheon</td>
+    <td>claude-mem 83k★</td>
+    <td><span class="badge badge-red">本週</span></td>
+  </tr>
+  <tr>
+    <td><strong>2</strong></td>
+    <td>補全 raphael/.mcp.json — Calendar, Gmail, Notion, Aletheia MCP</td>
+    <td>raphael</td>
+    <td>punkpeye/awesome-mcp-servers + hermes-agent</td>
+    <td><span class="badge badge-red">本週</span></td>
+  </tr>
+  <tr>
+    <td><strong>3</strong></td>
+    <td>Aletheia QMD RAG pipeline 安裝</td>
+    <td>Aletheia</td>
+    <td>QMD (BM25 + vector + reranking)</td>
+    <td><span class="badge badge-red">本週</span></td>
+  </tr>
 </table>
+
+<div style="margin-top: 32px; padding: 16px; background: var(--surface); border-radius: 8px; font-size: 0.78rem; color: var(--muted); text-align: center;">
+  eSystem v2.1.0 · Gstar v20260618 · 健康趨勢: 71.6 → 69.2 → <strong style="color:var(--green)">78.0 ↑↑</strong> · 下次建議執行: 2026-06-25
 </div>
 
-<div id="gstar" class="tab-content">
-<h2>Gstar × eSystem 工具缺口對應</h2>
-<table>
-<tr><th>Gstar Top 工具</th><th>分數</th><th>填補缺口</th><th>目標 Repo</th><th>建議行動</th></tr>
-<tr><td><b>thedotmack/claude-mem</b></td><td class="green">100/100</td><td>openmemory 替換</td><td>Pantheon</td><td class="red">本週執行</td></tr>
-<tr><td><b>NousResearch/hermes-agent</b></td><td class="green">97/100</td><td>Raphael Phase 1 核心</td><td>Raphael</td><td class="red">本週開始</td></tr>
-<tr><td><b>upstash/context7</b></td><td>94/100</td><td>Aletheia QMD 補強</td><td>Aletheia</td><td class="orange">下週整合</td></tr>
-<tr><td><b>rtk-ai/rtk</b></td><td>88/100</td><td>全生態系 token 降耗</td><td>Pantheon+Aletheia</td><td class="orange">下週試裝</td></tr>
-<tr><td><b>anthropics/skills</b></td><td>86/100</td><td>agent-config skill 模板</td><td>agent-config</td><td>本週研究</td></tr>
-</table>
-</div>
-
-<script>
-function showTab(id){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
-}
-</script>
 </body>
 </html>
