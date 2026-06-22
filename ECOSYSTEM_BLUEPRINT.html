@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <title>Ecosystem Blueprint · 20260622</title>
 <style>
+  * { box-sizing: border-box; }
   body { font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; background: #0b1020; color: #e2e8f0; margin: 0; padding: 24px; }
-  h1 { margin: 0 0 4px; font-size: 24px; }
+  h1 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.5px; }
   .sub { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
   .trend { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 24px; }
   .trend-head { display: flex; justify-content: space-between; align-items: baseline; }
@@ -21,18 +22,212 @@
   .health-fill { height: 100%; transition: width 0.4s; }
   .meta { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; }
   .health-num { font-weight: 700; }
-  .gov { }
   .push { color: #94a3b8; margin-left: auto; }
   .gap { font-size: 12px; color: #cbd5e1; margin-top: 8px; }
   .action { font-size: 12px; color: #cbd5e1; margin-top: 6px; }
   .prio { float: right; font-size: 11px; }
   .section { margin-top: 28px; }
-  .section h2 { font-size: 16px; color: #cbd5e1; border-left: 3px solid #6366f1; padding-left: 10px; margin-bottom: 12px; }
+  .section > h2 { font-size: 16px; color: #cbd5e1; border-left: 3px solid #6366f1; padding-left: 10px; margin-bottom: 16px; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th, td { padding: 8px 10px; border-bottom: 1px solid #334155; text-align: left; }
   th { color: #94a3b8; font-weight: 500; }
   .chain { background: #1e293b; border-radius: 12px; padding: 16px; font-family: ui-monospace, monospace; font-size: 12px; white-space: pre; color: #cbd5e1; line-height: 1.6; }
   .footer { margin-top: 32px; color: #64748b; font-size: 11px; text-align: center; }
+
+  /* ── Data Flow Diagram ── */
+  .flow-wrap {
+    background: #111827;
+    border-radius: 16px;
+    padding: 32px 24px;
+    border: 1px solid #1e293b;
+    overflow-x: auto;
+  }
+  .flow-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #475569;
+    margin-bottom: 28px;
+  }
+  .flow-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 680px;
+  }
+
+  /* rows */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+  }
+  .flow-row + .flow-row { margin-top: 0; }
+
+  /* node */
+  .fn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+    position: relative;
+    min-width: 110px;
+    z-index: 2;
+  }
+  .fn .fn-label { font-size: 10px; font-weight: 400; opacity: 0.75; margin-top: 2px; }
+
+  /* node colour themes */
+  .fn-tool   { background: #1e3a5f; border: 1.5px solid #3b82f6; color: #93c5fd; }
+  .fn-know   { background: #1a3a2a; border: 1.5px solid #22c55e; color: #86efac; }
+  .fn-agent  { background: #3b2a1a; border: 1.5px solid #f59e0b; color: #fcd34d; }
+  .fn-user   { background: #2a1a3b; border: 1.5px solid #a855f7; color: #d8b4fe; }
+  .fn-exec   { background: #1a2a3b; border: 1.5px solid #38bdf8; color: #7dd3fc; }
+  .fn-gov    { background: #1e1e2e; border: 1.5px dashed #6366f1; color: #a5b4fc; }
+  .fn-audit  { background: #1e1e2e; border: 1.5px dashed #64748b; color: #94a3b8; }
+
+  /* arrows */
+  .flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 18px;
+    width: 36px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-arrow .fa-label {
+    font-size: 9px;
+    font-family: ui-monospace, monospace;
+    color: #334155;
+    white-space: nowrap;
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111827;
+    padding: 0 3px;
+  }
+  .flow-arrow.down { width: 100%; flex-direction: column; height: 40px; }
+  .flow-arrow.down svg { display: block; margin: 0 auto; }
+
+  /* connector lines */
+  .flow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* side inputs row */
+  .flow-side {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+  }
+  .fn-side {
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  /* gap badge */
+  .gap-badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 99px;
+    background: #3b0000;
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    margin-top: 3px;
+  }
+
+  /* vertical spacer lines */
+  .vline-wrap {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+  }
+  .vline {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #334155, #1e293b);
+    position: relative;
+  }
+  .vline::after {
+    content: "▼";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #475569;
+  }
+  .vline-label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 9px;
+    font-family: ui-monospace, monospace;
+    color: #334155;
+    white-space: nowrap;
+  }
+
+  /* horizontal line */
+  .hline {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, #1e293b, #334155, #1e293b);
+  }
+  .hline-right { background: linear-gradient(to right, #334155, #1e293b); }
+  .hline-left  { background: linear-gradient(to left, #334155, #1e293b); }
+
+  /* gov floating lane */
+  .gov-lane {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: #475569;
+  }
+  .gov-lane .fn { min-width: 90px; font-size: 11px; }
+
+  /* legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #64748b;
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+  }
 </style>
 </head>
 <body>
@@ -47,6 +242,140 @@
     <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">prev: 78.0% · 4 筆歷史</div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       DATA FLOW DIAGRAM  (NEW)
+  ═══════════════════════════════════════ -->
+  <div class="section">
+    <h2>生態系資料流架構圖</h2>
+    <div class="flow-wrap">
+      <div class="flow-title">Personal AI Ecosystem · Causal Chain · salafadidas</div>
+      <div class="flow-canvas">
+
+        <!-- Row 1: Gstar + data sources -->
+        <div class="flow-row" style="gap:16px;">
+          <div class="fn fn-tool">
+            ⭐ starred-review
+            <span class="fn-label">工具發現雷達</span>
+          </div>
+          <div class="hline" style="max-width:40px;"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="fn fn-audit" style="font-size:10px;padding:5px 10px;min-width:88px;">GitHub Stars<span class="fn-label">~90 repos</span></div>
+          </div>
+        </div>
+
+        <!-- Down arrow 1 -->
+        <div class="vline-wrap">
+          <div class="vline" style="position:relative;">
+            <span class="vline-label">Gstar Top 20</span>
+          </div>
+        </div>
+
+        <!-- Row 2: Aletheia (知識底座) + side inputs -->
+        <div class="flow-row" style="gap:16px; align-items:stretch;">
+          <div class="flow-side">
+            <div class="fn fn-audit fn-side">📓 Obsidian Vault</div>
+            <div class="fn fn-audit fn-side">📋 Notion</div>
+            <div class="fn fn-audit fn-side">📁 Google Drive</div>
+          </div>
+          <div class="flow-arrow" style="width:28px;color:#22c55e;font-size:14px;">→</div>
+          <div class="fn fn-know" style="min-width:140px;">
+            🧠 Aletheia
+            <span class="fn-label">知識底座 · QMD · mem0</span>
+            <span class="gap-badge">⚠ QMD 未安裝</span>
+          </div>
+        </div>
+
+        <!-- Down arrow 2 -->
+        <div class="vline-wrap">
+          <div class="vline" style="position:relative;">
+            <span class="vline-label">MCP</span>
+          </div>
+        </div>
+
+        <!-- Row 3: Raphael + side inputs -->
+        <div class="flow-row" style="gap:16px; align-items:stretch;">
+          <div class="flow-side">
+            <div class="fn fn-audit fn-side">📅 Google Calendar</div>
+            <div class="fn fn-audit fn-side">📧 Gmail</div>
+            <div class="fn fn-audit fn-side">🐙 GitHub Activity</div>
+          </div>
+          <div class="flow-arrow" style="width:28px;color:#f59e0b;font-size:14px;">→</div>
+          <div class="fn fn-agent" style="min-width:140px;">
+            🤖 Raphael
+            <span class="fn-label">全知顧問 · 大賢者</span>
+            <span class="gap-badge">⚠ Phase 1 未啟動</span>
+          </div>
+        </div>
+
+        <!-- Down arrow 3 -->
+        <div class="vline-wrap">
+          <div class="vline" style="position:relative;">
+            <span class="vline-label">建議 · Alert</span>
+          </div>
+        </div>
+
+        <!-- Row 4: Vernon (decision) -->
+        <div class="flow-row">
+          <div class="fn fn-user" style="min-width:140px;">
+            👤 Vernon
+            <span class="fn-label">決策者 · 核准</span>
+          </div>
+        </div>
+
+        <!-- Down arrow 4 -->
+        <div class="vline-wrap">
+          <div class="vline" style="position:relative;">
+            <span class="vline-label">指令</span>
+          </div>
+        </div>
+
+        <!-- Row 5: Pantheon + n8n -->
+        <div class="flow-row" style="gap:16px;">
+          <div class="fn fn-exec" style="min-width:140px;">
+            ⚡ Pantheon
+            <span class="fn-label">LangGraph · FastAPI · GCP</span>
+          </div>
+          <div class="hline" style="max-width:32px;"></div>
+          <div class="fn fn-exec" style="min-width:80px;font-size:10px;padding:6px 10px;">
+            n8n
+            <span class="fn-label">簡單自動化</span>
+          </div>
+        </div>
+
+        <!-- Gov lane (horizontal, floating below) -->
+        <div class="gov-lane">
+          <div class="fn fn-gov" style="min-width:110px;font-size:11px;">
+            🛡 agent-config
+            <span class="fn-label">神經系統 · 治理</span>
+          </div>
+          <div style="flex:1;height:1px;border-top:1px dashed #334155;"></div>
+          <span style="font-size:10px;">同步規則 + MCP configs 至所有 repo ↑↑↑↑↑</span>
+          <div style="flex:1;height:1px;border-top:1px dashed #334155;"></div>
+          <div class="fn fn-audit" style="min-width:100px;font-size:10px;padding:5px 10px;">
+            🔍 eSystem
+            <span class="fn-label">稽核 + 健康報告</span>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend" style="margin-top:20px;">
+          <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div>工具雷達</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div>知識層</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div>顧問 Agent</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div>決策者</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#38bdf8;"></div>執行層</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#6366f1;border:1px dashed #6366f1;"></div>治理</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div>⚠ Gap / 未完成</div>
+        </div>
+
+      </div><!-- flow-canvas -->
+    </div><!-- flow-wrap -->
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ORIGINAL SECTIONS (preserved)
+  ═══════════════════════════════════════ -->
+
   <div class="section">
     <h2>Repo 狀態卡片</h2>
     <div class="grid">
@@ -60,7 +389,7 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#f59e0b">74%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-14</span>
       </div>
       <div class="gap"><b>缺口</b>：Aletheia MCP · Gmail MCP · Calendar MCP</div>
@@ -77,7 +406,7 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#22c55e">92%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-18</span>
       </div>
       <div class="gap"><b>缺口</b>：QMD 未安裝 · mem0 整合未完成</div>
@@ -94,7 +423,7 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#22c55e">82%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-20</span>
       </div>
       <div class="gap"><b>缺口</b>：openmemory → claude-mem · clear_user_data #25</div>
@@ -111,7 +440,7 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#f59e0b">66%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-18</span>
       </div>
       <div class="gap"><b>缺口</b>：Raphael config 模板缺</div>
@@ -128,7 +457,7 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#22c55e">92%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-14</span>
       </div>
       <div class="gap"><b>缺口</b>：（無）</div>
@@ -145,30 +474,13 @@
       </div>
       <div class="meta">
         <span class="health-num" style="color:#22c55e">100%</span>
-        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span style="color:#22c55e">● PASS</span>
         <span class="push">push: 2026-06-18</span>
       </div>
       <div class="gap"><b>缺口</b>：（無）</div>
       <div class="action"><b>下一步</b>：下次 Gstar 排程 <span class="prio">🟢 低</span></div>
     </div>
-</div>
   </div>
-
-  <div class="section">
-    <h2>核心因果鏈</h2>
-    <div class="chain">Gstar (工具發現)
-    ↓
-Aletheia (知識底座) ← QMD · mem0 · Notion · markitdown
-    ↓ MCP
-Raphael / Hermes (全知顧問) ← Calendar · Gmail · LLM 對話 · GitHub
-    ↓ 建議
-Vernon (決策)
-    ↓ 指令
-Pantheon / n8n (執行層) → LangGraph flows · Email draft
-    ↑
-agent-config (神經系統 — 治理規則 + 配置同步)
-    ↑
-eSystem (稽核層)</div>
   </div>
 
   <div class="section">
@@ -210,6 +522,6 @@ Aletheia                                    ████░░░░░░░░
     </table>
   </div>
 
-  <div class="footer">Gstar v20260622 · eSystem v2.1 · Live data from GitHub API · No caching</div>
+  <div class="footer">Gstar v20260622 · eSystem v2.2 · Live data from GitHub API · No caching · +flow diagram</div>
 </body>
 </html>
