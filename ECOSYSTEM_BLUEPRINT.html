@@ -2,293 +2,214 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vernon's AI Ecosystem Blueprint — 2026-06-18</title>
+<title>Ecosystem Blueprint · 20260622</title>
 <style>
-  :root {
-    --bg: #0d1117; --surface: #161b22; --border: #30363d;
-    --accent: #58a6ff; --green: #3fb950; --orange: #f0883e;
-    --red: #f85149; --purple: #bc8cff; --text: #e6edf3;
-    --muted: #8b949e; --card: #21262d;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; }
-  h1 { font-size: 1.6rem; color: var(--accent); margin-bottom: 4px; }
-  .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
-  .card h3 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-  .stat { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .stat:last-child { border-bottom: none; }
-  .stat-label { font-size: 0.88rem; }
-  .stat-value { font-size: 0.88rem; font-weight: 600; }
-  .badge { padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
-  .badge-green { background: rgba(63,185,80,0.15); color: var(--green); }
-  .badge-orange { background: rgba(240,136,62,0.15); color: var(--orange); }
-  .badge-red { background: rgba(248,81,73,0.15); color: var(--red); }
-  .badge-purple { background: rgba(188,140,255,0.15); color: var(--purple); }
-  .badge-blue { background: rgba(88,166,255,0.15); color: var(--accent); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-  th { background: var(--surface); color: var(--muted); text-align: left; padding: 8px 10px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
-  td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .section-title { font-size: 1rem; font-weight: 600; color: var(--accent); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
-  .trend-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
-  .trend-fill { height: 6px; border-radius: 3px; background: var(--green); }
-  .trend-fill.warn { background: var(--orange); }
-  .trend-fill.critical { background: var(--red); }
-  .health-big { font-size: 2.5rem; font-weight: 700; color: var(--green); }
-  .health-prev { color: var(--muted); font-size: 0.85rem; }
-  .arrow-up { color: var(--green); }
-  .arrow-down { color: var(--red); }
-  .causal-chain { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; font-family: monospace; font-size: 0.82rem; line-height: 1.8; overflow-x: auto; }
-  .node { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; margin: 2px; }
-  .node.active { border-color: var(--green); color: var(--green); }
-  .node.warn { border-color: var(--orange); color: var(--orange); }
-  .node.critical { border-color: var(--red); color: var(--red); }
-  .node.infra { border-color: var(--purple); color: var(--purple); }
-  .sprint-bar { height: 20px; background: var(--surface); border-radius: 10px; overflow: hidden; margin: 8px 0; }
-  .sprint-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--purple)); border-radius: 10px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 0.7rem; font-weight: 600; color: white; }
-  .gap-item { padding: 8px 12px; margin: 4px 0; border-left: 3px solid var(--red); background: rgba(248,81,73,0.05); border-radius: 0 6px 6px 0; font-size: 0.85rem; }
-  .gap-item.warn { border-color: var(--orange); background: rgba(240,136,62,0.05); }
-  .full-width { grid-column: 1 / -1; }
-  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+  body { font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; background: #0b1020; color: #e2e8f0; margin: 0; padding: 24px; }
+  h1 { margin: 0 0 4px; font-size: 24px; }
+  .sub { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
+  .trend { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+  .trend-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .trend h2 { margin: 0; font-size: 16px; color: #cbd5e1; }
+  .overall { font-size: 32px; font-weight: 700; }
+  .arrow { font-size: 24px; margin-left: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card { background: #1e293b; border-radius: 12px; padding: 16px; border: 1px solid #334155; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .repo { font-weight: 700; color: #f1f5f9; font-family: ui-monospace, monospace; }
+  .role { font-size: 12px; color: #94a3b8; }
+  .health-bar { background: #0f172a; height: 6px; border-radius: 3px; overflow: hidden; }
+  .health-fill { height: 100%; transition: width 0.4s; }
+  .meta { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; }
+  .health-num { font-weight: 700; }
+  .gov { }
+  .push { color: #94a3b8; margin-left: auto; }
+  .gap { font-size: 12px; color: #cbd5e1; margin-top: 8px; }
+  .action { font-size: 12px; color: #cbd5e1; margin-top: 6px; }
+  .prio { float: right; font-size: 11px; }
+  .section { margin-top: 28px; }
+  .section h2 { font-size: 16px; color: #cbd5e1; border-left: 3px solid #6366f1; padding-left: 10px; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid #334155; text-align: left; }
+  th { color: #94a3b8; font-weight: 500; }
+  .chain { background: #1e293b; border-radius: 12px; padding: 16px; font-family: ui-monospace, monospace; font-size: 12px; white-space: pre; color: #cbd5e1; line-height: 1.6; }
+  .footer { margin-top: 32px; color: #64748b; font-size: 11px; text-align: center; }
 </style>
 </head>
 <body>
+  <h1>🌐 Ecosystem Blueprint</h1>
+  <div class="sub">Generated 2026-06-22 03:08 UTC · live GitHub API · governance baseline = agent-config</div>
 
-<h1>🧠 Vernon's AI Ecosystem Blueprint</h1>
-<p class="subtitle">eSystem v2.1.0 · 執行時間: 2026-06-18 · 上次: 2026-06-14 · Gstar 串接: ✅</p>
-
-<div class="grid">
-  <!-- Health Score -->
-  <div class="card">
-    <h3>整體健康指數</h3>
-    <div style="text-align:center; padding: 16px 0;">
-      <div class="health-big">78.0%</div>
-      <div class="health-prev">↑ 上次: 69.2% <span class="arrow-up">+8.8 ↑↑</span></div>
-      <div style="margin-top: 8px; font-size: 0.8rem; color: var(--muted);">趨勢: 71.6 → 69.2 → <strong style="color:var(--green)">78.0</strong></div>
+  <div class="trend">
+    <div class="trend-head">
+      <h2>整體健康指數</h2>
+      <div><span class="overall">84.3%</span><span class="arrow">↑</span></div>
     </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">project-pantheon</span>
-      <div class="trend-fill" style="width:82%"></div>
-      <span style="font-size:0.75rem; color:var(--green)">82</span>
-    </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">Aletheia</span>
-      <div class="trend-fill" style="width:82%"></div>
-      <span style="font-size:0.75rem; color:var(--green)">82</span>
-    </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">raphael</span>
-      <div class="trend-fill warn" style="width:74%"></div>
-      <span style="font-size:0.75rem; color:var(--orange)">74</span>
-    </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">starred-review</span>
-      <div class="trend-fill" style="width:92%"></div>
-      <span style="font-size:0.75rem; color:var(--green)">92</span>
-    </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">ecosystem-blueprint</span>
-      <div class="trend-fill" style="width:92%"></div>
-      <span style="font-size:0.75rem; color:var(--green)">92</span>
-    </div>
-    <div class="trend-bar">
-      <span style="font-size:0.75rem; width:140px;">agent-config</span>
-      <div class="trend-fill critical" style="width:46%"></div>
-      <span style="font-size:0.75rem; color:var(--red)">46</span>
-    </div>
+    <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">prev: 78.0% · 4 筆歷史</div>
   </div>
 
-  <!-- Sprint Progress -->
-  <div class="card">
-    <h3>Sprint 時間軸 — Stage 2</h3>
-    <div class="sprint-bar"><div class="sprint-fill" style="width:65%">65%</div></div>
-    <div style="font-size:0.82rem; line-height: 2;">
-      <div>✅ GitNexus 整合（完成）</div>
-      <div>✅ .env.example GITHUB_TOKEN 規範</div>
-      <div>✅ ecosystem-blueprint SKILL.md v2.1</div>
-      <div style="color:var(--red)">🔴 openmemory → claude-mem（本週）</div>
-      <div style="color:var(--red)">🔴 Aletheia QMD 安裝（本週）</div>
-      <div style="color:var(--red)">🔴 raphael/.mcp.json Phase 1 補全（本週）</div>
-      <div style="color:var(--orange)">🟠 rtk token 節省測試（下週）</div>
-      <div style="color:var(--orange)">🟠 context7 整合（Stage 2 後段）</div>
-      <div style="color:var(--muted)">🎯 GCP 多租戶部署（Stage 2 結束）</div>
+  <div class="section">
+    <h2>Repo 狀態卡片</h2>
+    <div class="grid">
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">raphael</span>
+        <span class="role">全知顧問</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:74%;background:#f59e0b"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#f59e0b">74%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-14</span>
+      </div>
+      <div class="gap"><b>缺口</b>：Aletheia MCP · Gmail MCP · Calendar MCP</div>
+      <div class="action"><b>下一步</b>：Phase 1 安裝 Hermes Agent + 連線 Aletheia MCP <span class="prio">🔴 緊急</span></div>
     </div>
-    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--muted);">
-      Stage 3 Preview: LangGraph vs crewAI 決策 · 5 specialized agents · Cross-agent consensus
+
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">Aletheia</span>
+        <span class="role">知識底座</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:92%;background:#22c55e"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#22c55e">92%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-18</span>
+      </div>
+      <div class="gap"><b>缺口</b>：QMD 未安裝 · mem0 整合未完成</div>
+      <div class="action"><b>下一步</b>：QMD 安裝（Claude Code session） <span class="prio">🔴 緊急</span></div>
     </div>
-  </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">project-pantheon</span>
+        <span class="role">執行中樞</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:82%;background:#22c55e"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#22c55e">82%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-20</span>
+      </div>
+      <div class="gap"><b>缺口</b>：openmemory → claude-mem · clear_user_data #25</div>
+      <div class="action"><b>下一步</b>：Issue #25 修復 → S1-NS-1 解鎖 <span class="prio">🟠 高</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">agent-config</span>
+        <span class="role">神經系統</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:66%;background:#f59e0b"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#f59e0b">66%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-18</span>
+      </div>
+      <div class="gap"><b>缺口</b>：Raphael config 模板缺</div>
+      <div class="action"><b>下一步</b>：新增 .hermes.env.example + Raphael config 模板 <span class="prio">🟡 中</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">ecosystem-blueprint</span>
+        <span class="role">稽核層</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:92%;background:#22c55e"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#22c55e">92%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-14</span>
+      </div>
+      <div class="gap"><b>缺口</b>：（無）</div>
+      <div class="action"><b>下一步</b>：保持 SKILL.md 同步 <span class="prio">🟢 低</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="repo">starred-review</span>
+        <span class="role">工具雷達</span>
+      </div>
+      <div class="health-bar">
+        <div class="health-fill" style="width:100%;background:#22c55e"></div>
+      </div>
+      <div class="meta">
+        <span class="health-num" style="color:#22c55e">100%</span>
+        <span class="gov" style="color:#22c55e">● PASS</span>
+        <span class="push">push: 2026-06-18</span>
+      </div>
+      <div class="gap"><b>缺口</b>：（無）</div>
+      <div class="action"><b>下一步</b>：下次 Gstar 排程 <span class="prio">🟢 低</span></div>
+    </div>
 </div>
+  </div>
 
-<!-- Causal Chain -->
-<div class="section-title">🔗 因果鏈架構</div>
-<div class="causal-chain">
-<span class="node infra">⚙️ agent-config</span> (神經系統 — 治理 & 配置同步)
+  <div class="section">
+    <h2>核心因果鏈</h2>
+    <div class="chain">Gstar (工具發現)
     ↓
-<span class="node active">🔭 starred-review / Gstar</span> (工具發現雷達) → 今日: 90 repos, Top 20 分析完成
-    ↓
-<span class="node warn">🧠 Aletheia</span> (知識底座) ← Obsidian · Notion · markitdown · QMD [🔴 QMD 待安裝]
+Aletheia (知識底座) ← QMD · mem0 · Notion · markitdown
     ↓ MCP
-<span class="node warn">👁️ raphael / Hermes</span> (全知顧問) ← Calendar · Gmail · GitHub [🔴 .mcp.json 待補全]
+Raphael / Hermes (全知顧問) ← Calendar · Gmail · LLM 對話 · GitHub
     ↓ 建議
-<span class="node active">👤 Vernon</span> (決策)
+Vernon (決策)
     ↓ 指令
-<span class="node active">⚡ Pantheon</span> [🔴 openmemory 待替換 → claude-mem] · <span class="node active">n8n</span> (執行層)
+Pantheon / n8n (執行層) → LangGraph flows · Email draft
     ↑
-<span class="node infra">📊 eSystem / ecosystem-blueprint</span> (稽核層)
-</div>
+agent-config (神經系統 — 治理規則 + 配置同步)
+    ↑
+eSystem (稽核層)</div>
+  </div>
 
-<!-- Ecosystem Status Table -->
-<div class="section-title">📊 生態系狀態表</div>
-<table>
-  <tr>
-    <th>排名</th><th>Repo</th><th>角色</th><th>最後活躍</th><th>健康度</th><th>缺失連線</th><th>下一個關鍵動作</th><th>優先度</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td><strong>raphael</strong></td>
-    <td>全知顧問</td>
-    <td>2026-06-14（4天前）</td>
-    <td><span class="badge badge-orange">74%</span></td>
-    <td>Hermes安裝 · Calendar/Gmail/Notion MCP · Aletheia MCP</td>
-    <td>Phase 1 安裝 Hermes，補全 .mcp.json</td>
-    <td><span class="badge badge-red">🔴 緊急</span></td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td><strong>Aletheia</strong></td>
-    <td>知識底座</td>
-    <td>2026-06-18（今天）🟢</td>
-    <td><span class="badge badge-orange">82%</span></td>
-    <td>QMD 安裝 · mem0 整合</td>
-    <td>QMD RAG pipeline 安裝</td>
-    <td><span class="badge badge-red">🔴 緊急</span></td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td><strong>project-pantheon</strong></td>
-    <td>執行中樞</td>
-    <td>2026-06-18（今天）🟢</td>
-    <td><span class="badge badge-green">82%</span></td>
-    <td>openmemory → claude-mem 替換</td>
-    <td>替換記憶層，Stage 2 部署</td>
-    <td><span class="badge badge-orange">🟠 高</span></td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td><strong>agent-config</strong></td>
-    <td>神經系統</td>
-    <td>2026-06-18（今天）🟢</td>
-    <td><span class="badge badge-red">46%</span></td>
-    <td>requirements.txt · .env.example · SKILL.md · 2 open issues</td>
-    <td>補齊缺失檔案，關閉 2 issues</td>
-    <td><span class="badge badge-orange">🟡 中</span></td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td><strong>starred-review</strong></td>
-    <td>工具雷達</td>
-    <td>2026-06-18（今天）🟢</td>
-    <td><span class="badge badge-green">92%</span></td>
-    <td>—</td>
-    <td>本次 Gstar 已執行 ✅</td>
-    <td><span class="badge badge-blue">🟢 低</span></td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td><strong>ecosystem-blueprint</strong></td>
-    <td>稽核層</td>
-    <td>2026-06-14（4天前）</td>
-    <td><span class="badge badge-green">92%</span></td>
-    <td>—</td>
-    <td>本次 eSystem 已執行 ✅</td>
-    <td><span class="badge badge-blue">🟢 低</span></td>
-  </tr>
-</table>
+  <div class="section">
+    <h2>Sprint 進度</h2>
+    <div class="chain">Pantheon Stage 2 Sprint 1 — Memory Layer    ██████████░░░░░░░░ 55%
+├── ✅ Sprint 0 baseline audit
+├── ✅ S1-MEM-1 prompt fix + EMBED_MODEL=none (PR #24)
+├── 🔴 Issue #25：clear_user_data 三個 prod bugs（blocker）
+├── 🟠 S1-NS-1 namespace 設計（待 #25）
+└── 🟠 openmemory → claude-mem PoC
 
-<!-- Governance -->
-<div class="section-title">🏛️ Governance Compliance</div>
-<table>
-  <tr><th>Repo</th><th>狀態</th><th>Drift 項目</th><th>Required Action</th></tr>
-  <tr>
-    <td>agent-config</td>
-    <td><span class="badge badge-orange">WARN</span></td>
-    <td>缺 requirements.txt, .env.example, SKILL.md · 2 open issues</td>
-    <td>補齊 3 個缺失檔案，關閉 issues</td>
-  </tr>
-  <tr>
-    <td>project-pantheon</td>
-    <td><span class="badge badge-orange">WARN</span></td>
-    <td>缺 SKILL.md · openmemory 停更 78 天</td>
-    <td>替換 openmemory → claude-mem；補 SKILL.md</td>
-  </tr>
-  <tr>
-    <td>Aletheia</td>
-    <td><span class="badge badge-orange">WARN</span></td>
-    <td>缺 SKILL.md · QMD 未安裝</td>
-    <td>安裝 QMD；補 SKILL.md</td>
-  </tr>
-  <tr>
-    <td>raphael</td>
-    <td><span class="badge badge-orange">WARN</span></td>
-    <td>缺 requirements.txt, SKILL.md · .mcp.json 僅有 github + filesystem</td>
-    <td>補全 .mcp.json Phase 1 connections；補 SKILL.md</td>
-  </tr>
-  <tr>
-    <td>starred-review</td>
-    <td><span class="badge badge-green">PASS</span></td>
-    <td>—</td>
-    <td>保持現狀</td>
-  </tr>
-  <tr>
-    <td>ecosystem-blueprint</td>
-    <td><span class="badge badge-green">PASS</span></td>
-    <td>—</td>
-    <td>保持現狀</td>
-  </tr>
-</table>
+Raphael Phase 1 — 大賢者                    ██░░░░░░░░░░░░░░░░ 10%
+├── 🔴 Hermes Agent 安裝
+├── 🟠 Calendar / Gmail / Notion / GitHub MCP
+└── 🎯 Morning briefing cron
 
-<!-- Gap Analysis from Gstar -->
-<div class="section-title">🔌 Gstar × eSystem 工具缺口對應</div>
-<div class="gap-item">🔴 <strong>raphael/.mcp.json</strong> 空洞 → 填補方案: punkpeye/awesome-mcp-servers 目錄 + NousResearch/hermes-agent Phase 1 安裝</div>
-<div class="gap-item">🔴 <strong>Pantheon openmemory</strong> 停更 → 替換: thedotmack/claude-mem（83k stars, MCP原生）</div>
-<div class="gap-item">🔴 <strong>Aletheia QMD</strong> 未安裝 → 串接機會: Egonex-AI/Understand-Anything（知識視覺化）+ academic-research-skills（研究流程）</div>
-<div class="gap-item warn">🟠 <strong>Pantheon token 成本</strong> → rtk-ai/rtk（-60~90% token，+1.2k stars）</div>
-<div class="gap-item warn">🟠 <strong>Pantheon 情報蒐集</strong> → Panniantong/Agent-Reach（+5.2k 爆炸，今日更新）</div>
-<div class="gap-item warn">🟠 <strong>agent-config skill 規範</strong> → mattpocock/skills（+5.7k 本週最大漲幅，134k stars）</div>
+Aletheia                                    ████░░░░░░░░░░░░░░ 25%
+├── 🔴 QMD 安裝
+└── 🟠 mem0 整合</div>
+  </div>
 
-<!-- Priority Actions -->
-<div class="section-title">✅ 本次最優先 3 個行動</div>
-<table>
-  <tr><th>#</th><th>行動</th><th>目標 Repo</th><th>工具</th><th>時程</th></tr>
-  <tr>
-    <td><strong>1</strong></td>
-    <td>替換 openmemory → thedotmack/claude-mem</td>
-    <td>project-pantheon</td>
-    <td>claude-mem 83k★</td>
-    <td><span class="badge badge-red">本週</span></td>
-  </tr>
-  <tr>
-    <td><strong>2</strong></td>
-    <td>補全 raphael/.mcp.json — Calendar, Gmail, Notion, Aletheia MCP</td>
-    <td>raphael</td>
-    <td>punkpeye/awesome-mcp-servers + hermes-agent</td>
-    <td><span class="badge badge-red">本週</span></td>
-  </tr>
-  <tr>
-    <td><strong>3</strong></td>
-    <td>Aletheia QMD RAG pipeline 安裝</td>
-    <td>Aletheia</td>
-    <td>QMD (BM25 + vector + reranking)</td>
-    <td><span class="badge badge-red">本週</span></td>
-  </tr>
-</table>
+  <div class="section">
+    <h2>本次最優先 3 個行動</h2>
+    <ol>
+      <li><b style="color:#ef4444;">🔴 修復 Issue #25</b>（Pantheon · 本週）— clear_user_data 三個 prod bugs，S1-NS-1 硬性 blocker</li>
+      <li><b style="color:#ef4444;">🔴 Aletheia QMD 安裝</b>（本週）— Pantheon + Raphael 共用 knowledge layer</li>
+      <li><b style="color:#f59e0b;">🟠 Raphael Phase 1 啟動</b>（本週起）— Hermes Agent + .mcp.json 補全</li>
+    </ol>
+  </div>
 
-<div style="margin-top: 32px; padding: 16px; background: var(--surface); border-radius: 8px; font-size: 0.78rem; color: var(--muted); text-align: center;">
-  eSystem v2.1.0 · Gstar v20260618 · 健康趨勢: 71.6 → 69.2 → <strong style="color:var(--green)">78.0 ↑↑</strong> · 下次建議執行: 2026-06-25
-</div>
+  <div class="section">
+    <h2>Gstar × eSystem 工具缺口對應</h2>
+    <table>
+      <tr><th>Gstar 推薦</th><th>填補缺口</th><th>建議行動</th></tr>
+      <tr><td>thedotmack/claude-mem</td><td>Pantheon openmemory 替換</td><td>Sprint 1 結尾 PoC</td></tr>
+      <tr><td>NousResearch/hermes-agent</td><td>Raphael 全知顧問基底</td><td>Phase 1 採用</td></tr>
+      <tr><td>upstash/context7</td><td>Aletheia RAG 強化</td><td>QMD 安裝後評估</td></tr>
+      <tr><td>abhigyanpatwari/GitNexus</td><td>Aletheia 知識圖譜</td><td>Stage 2 後段</td></tr>
+    </table>
+  </div>
 
+  <div class="footer">Gstar v20260622 · eSystem v2.1 · Live data from GitHub API · No caching</div>
 </body>
 </html>
