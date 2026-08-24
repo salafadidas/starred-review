@@ -80,14 +80,14 @@
 - **評分變化**：60→64（星數/新版加分部分維持不變，僅分類由「已導入」修正為「未導入」）
 
 ### vancelin/openmemory — 未導入（原列「建議除役」，修正後：已確認非整合狀態，除役動作已於 repo 層級完成，非待辦事項）
-- **狀況**：144天無 commit（v20260622 報告為81天，本次惡化 +63天）；兩個月內星數僅 102→106（+4），社群關注度停滯。四個 active repo 目前均無 openmemory 引用；project-pantheon `.mcp.json` 過去確實有一個 dev-only openmemory entry，但已於 commit `51297ba`（commit 時間戳記 2026-06-22）以 `chore(clean): S1-CLEAN-1 — remove openmemory dev-only MCP entry` 移除，早於本報告資料快照
+- **狀況**：144天無 commit（v20260622 報告為81天，本次惡化 +63天）；兩個月內星數僅 102→106（+4），社群關注度停滯。本次查證的四個 repositories 目前均無 openmemory 引用；project-pantheon `.mcp.json` 過去確實有一個 dev-only openmemory entry，但已於 commit `51297ba`（commit 時間戳記 2026-06-22）以 `chore(clean): S1-CLEAN-1 — remove openmemory dev-only MCP entry` 移除，早於本報告資料快照
 - **修正說明**：原報告將其列在「已導入」表格並建議「本週內正式除役」，但即時查證顯示該 dev-only 整合早已於 repo 層級移除，**目前並無待除役的實際整合**；此為方法論誤判（沿用舊報告分類），非本週待辦的治理決策項目
 
 ---
 
 ## PART 2A — 未導入 repos 全評估（122 repos，依契合度排序）
 
-> 評分方法：Top 20（🏆標記）採人工逐項評估（活躍度、release、星數成長、對五個 active project 的具體價值）；其餘 repos 採統一啟發式（關鍵字相關性 + 活躍度 + 語言 + 中文內容加權），力求涵蓋全部 122 個未導入 starred repos，避免遺漏。契合度 <60 者多為目錄型/教學型/與五個 active project 無直接技術重疊的 repo，標記「觀察中」代表暫無明確導入路徑。
+> 評分方法：Top 20（🏆標記）採人工逐項評估（活躍度、release、星數成長、對 Gstar evaluation universe 中的五個 repositories 的具體價值）；其餘 repos 採統一啟發式（關鍵字相關性 + 活躍度 + 語言 + 中文內容加權），力求涵蓋全部 122 個未導入 starred repos，避免遺漏。契合度 <60 者多為目錄型/教學型/與 Gstar evaluation universe 中的五個 repositories 無直接技術重疊的 repo，標記「觀察中」代表暫無明確導入路徑。
 >
 > **2026-08-24 第二輪修正**：`thedotmack/claude-mem`（83/100，#6）、`upstash/context7`（64/100，#21）、`vancelin/openmemory`（未評分，列於表末 #122）三者已正式依契合度插入下表排序並重新編號，移除前次「延後排入下次報告週期」的例外處理。`openmemory` 因未評分，依一致排序規則置於表末。
 
@@ -98,7 +98,7 @@
 | 3 | **crewAIInc/crewAI** 🏆 | 57,497 | 🟢 | 2026-08-22 | Pantheon | 87/100 | 多 agent 框架，Stage 3 對照組（本次重新分類為未導入） |
 | 4 | **TauricResearch/TradingAgents** 🏆 | 99,360 | ⚪ | 2026-07-18 | Pantheon | 86/100 | 星數大漲但轉為不活躍，需觀察 |
 | 5 | **msitarzewski/agency-agents** 🏆 | 147,476 | 🟢 | 2026-08-06 | Raphael | 83/100 | 星數暴增，sub-agent 人格化模式參考 |
-| 6 | **thedotmack/claude-mem** | 91,568 | 🟢 | 2026-08-21 | Raphael+agent-config（候選） | 83/100 | 2026-08-24 修正併入：四個 active repo 均無 repo-native 整合證據（見 PART 1），原「已導入」為誤判，改列未導入候選 |
+| 6 | **thedotmack/claude-mem** | 91,568 | 🟢 | 2026-08-21 | Raphael+agent-config（候選） | 83/100 | 2026-08-24 修正併入：本次查證的四個 repositories 均無 repo-native 整合證據（見 PART 1），原「已導入」為誤判，改列未導入候選 |
 | 7 | **Graphify-Labs/graphify** 🏆 | 109,684 | 🟢 | 2026-08-20 | Aletheia | 78/100 | 程式碼/文件/SQL 知識圖譜化，補 GitNexus 之外的資料源 |
 | 8 | **rohitg00/agentmemory** 🏆 | 27,296 | 🟢 | 2026-08-17 | Pantheon | 77/100 | Memory layer 基準測試對照 langmem |
 | 9 | **NVIDIA/SkillSpector** 🏆 | 14,890 | 🟢 | 2026-08-22 | agent-config | 76/100 | Skill 安全掃描，直接呼應 security.md 治理需求 |
@@ -179,7 +179,7 @@
 | 84 | **openai/codex-plugin-cc** | 32,210 | ⚪ | 2026-07-08 | 觀察中 | 31/100 | Claude Code 內呼叫 Codex（不活躍） |
 | 85 | **companion-inc/feynman** | 8,538 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | （無公開描述） |
 | 86 | **mcncarl/yichen-skills** | 1,924 | 🟢 | 2026-08-20 | 觀察中 | 31/100 | （無公開描述） |
-| 87 | **godotengine/godot** | 116,022 | 🟢 | 2026-08-21 | 觀察中 | 28/100 | 遊戲引擎（與五個 active project 無重疊） |
+| 87 | **godotengine/godot** | 116,022 | 🟢 | 2026-08-21 | 觀察中 | 28/100 | 遊戲引擎（與 Gstar evaluation universe 中的五個 repositories 無重疊） |
 | 88 | **apple/container** | 49,251 | 🟢 | 2026-08-20 | 觀察中 | 28/100 | macOS 輕量虛擬機容器工具 |
 | 89 | **AlexsJones/llmfit** | 33,658 | 🟢 | 2026-08-23 | 觀察中 | 28/100 | 硬體可跑模型比對工具 |
 | 90 | **tw93/Kami** | 10,866 | 🟢 | 2026-08-08 | 觀察中 | 28/100 | 內容排版工具 |
@@ -214,7 +214,7 @@
 | 119 | **doggy8088/gpt4o-tokenizer** | 18 | ⚪ | 2026-05-31 | 觀察中 | 15/100 | Tokenizer 工具（不活躍） |
 | 120 | **salafadidas/SeongJinWoo**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
 | 121 | **salafadidas/Garden-Party**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
-| 122 | **vancelin/openmemory** | 106 | ⚪ | 144天前 | — | 未評分 | 2026-08-24 修正併入：四個 active repo 均無現行整合證據；project-pantheon 過去的 dev-only entry 已於 commit `51297ba`（2026-06-22）移除；未評分（非活躍候選），依一致排序規則置於表末 |
+| 122 | **vancelin/openmemory** | 106 | ⚪ | 144天前 | — | 未評分 | 2026-08-24 修正併入：本次查證的四個 repositories 均無現行整合證據；project-pantheon 過去的 dev-only entry 已於 commit `51297ba`（2026-06-22）移除；未評分（非活躍候選），依一致排序規則置於表末 |
 
 ---
 
@@ -228,7 +228,7 @@
 | 4 | 🟢 | **crewAIInc/crewAI** | 57,497 | +3,400 ↑ | 1天前 | Pantheon（Stage 3對照） | 另一條多 agent 路線；Pantheon Stage 3 架構決策的對照組 | 87/100 | 簡潔 API · 範本豐富 · 持續活躍 · 適合架構比較 | 與 LangGraph 雙軌維護成本高 · **本次確認未在 requirements.txt/CLAUDE.md 中找到整合證據，重新分類為未導入** | 1.15.17(08-20) | 85→87（+2，星數成長；分類修正：由「已導入」→「未導入」） | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 5 | 🟢 | **NousResearch/hermes-agent** | 234,606 | +35,509 ↑↑ | 今天 | ✅已導入 / Raphael | Raphael Phase 1 直接基底；3-layer memory 與 MCP 原生支援 | 86/100 | Raphael 直接套用 · 內建 MCP+memory · 高頻釋出節奏 | **11,912 open issues · 23,119 open PRs**（2026-08-24 以 Search API 分別查證，取代原本合計誤導的 open_issues_count 34,923）· open PR 規模仍異常龐大，需評估維運健康度 · 暴增期穩定性待觀察 | v0.20.5(08-21)、v0.20.4(08-18)、v0.20.3(08-17) | 78→86（+8，星數暴增+5，新版+3） | Raphael Phase 1 持續採用，觀察 issue/PR backlog 趨勢 |
 | 6 | ⚪ | **TauricResearch/TradingAgents** | 99,360 | +11,510 ↑↑ | **36天前** | Pantheon | 多 agent + 領域知識完整實作範本；Stage 3 設計可參考 | 86/100 | 星數大幅成長 · 完整領域案例 | **由 baseline 的「今天 push」轉為 36天不活躍，動能明顯降溫，需觀察是否停止維護** | v0.3.1(07-05) | 85→86（+1，星數成長抵銷活躍度下滑疑慮） | 觀察下次 push，若持續不活躍則降低優先序 |
-| 7 | 🟢 | **thedotmack/claude-mem** | 91,568 | +7,978 ↑ | 2天前 | 未導入（候選）/ Raphael+agent-config | 跨 session context 記憶候選方案；project-pantheon 決策文件記載已評估但暫緩（Candidate D, not pursued） | 83/100 | 與 Claude 原生記憶模型一致 | 四個 active repo 均無 repo-native 整合證據（requirements.txt/.mcp.json/CLAUDE.md 均未引用）· 與 langmem 分工邊界未定 | v13.15.3(08-20) | 84→83（2026-08-24：移除原「確認導入狀態+1」加分，因無 repo-native 證據，本 session runtime 可用不構成證據） | 候選建議：若要導入，須先在 Raphael/agent-config 建立實際串接（CLAUDE.md 明確引用或 .mcp.json 設定），非急件 |
+| 7 | 🟢 | **thedotmack/claude-mem** | 91,568 | +7,978 ↑ | 2天前 | 未導入（候選）/ Raphael+agent-config | 跨 session context 記憶候選方案；project-pantheon 決策文件記載已評估但暫緩（Candidate D, not pursued） | 83/100 | 與 Claude 原生記憶模型一致 | 本次查證的四個 repositories 均無 repo-native 整合證據（requirements.txt/.mcp.json/CLAUDE.md 均未引用）· 與 langmem 分工邊界未定 | v13.15.3(08-20) | 84→83（2026-08-24：移除原「確認導入狀態+1」加分，因無 repo-native 證據，本 session runtime 可用不構成證據） | 候選建議：若要導入，須先在 Raphael/agent-config 建立實際串接（CLAUDE.md 明確引用或 .mcp.json 設定），非急件 |
 | 8 | 🟢 | **msitarzewski/agency-agents** | 147,476 | +32,526 ↑↑ | 17天前 | Raphael | Agency 模式對 Raphael 多 sub-agent 架構有直接參考價值 | 83/100 | 星數暴增 · 人格化 sub-agent 範本豐富 | 17天未 push，動能趨緩 · 尚無正式 release | （無 release） | 78→83（+5，星數暴增） | Raphael sub-agent 人格化設計參考，本季瀏覽 |
 | 9 | 🟢 | **Graphify-Labs/graphify** | 109,684 | 首次追蹤 | 3天前 | Aletheia | 把 codebase/docs/SQL/PDF 轉成可查詢知識圖譜，local deterministic AST parsing | 78/100 | 星數高（10萬+）· 持續高頻 release · 支援 Claude Code/Cursor/Codex/Gemini CLI | 新進榜，長期穩定性待觀察 · 與現有 GitNexus 功能有重疊 | v0.9.48(08-20) | 新進榜 → 78 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 10 | 🟢 | **rohitg00/agentmemory** | 27,296 | +3,668 ↑ | 6天前 | Pantheon | Memory layer 比較參考；對照目前 langmem 方案優缺點 | 77/100 | 活躍 · benchmark 導向 · 與生態系契合 | 整合工作量需評估 | v0.9.29(08-16) | 74→77（+3，星數+3,668↑，release） | 監控 release，作為 langmem 基準對照 |
@@ -241,7 +241,7 @@
 | 17 | 🟢 | **ComposioHQ/awesome-claude-skills** | 73,073 | +7,622 ↑ | 13天前 | agent-config | Skill 生態系參考來源；餵入 agent-config 的 skill templates | 68/100 | 範本豐富 · **活躍度回升**（由baseline的30天不活躍→13天前） | 目錄型 repo，需自篩 | （無 release） | 64→68（+4，星數+7,622↑，活躍度回升+2） | 本週瀏覽，摘錄 skill 模板進 agent-config |
 | 18 | 🟢 | **Panniantong/Agent-Reach** | 74,313 | 首次追蹤 | 11天前 | Raphael | 讓 AI agent 讀取/搜尋 Twitter/Reddit/YouTube/GitHub 等，零 API 費用 | 68/100 | 一站式 CLI · 零 API 費用 · Raphael 顧問層資訊蒐集直接可用 | 11天未 push，release 已停滯於 06-11（動能降溫） | v1.5.0(06-11) | 新進榜 → 68 | Raphael 資訊蒐集層 PoC，觀察後續維護節奏 |
 | 19 | 🟢 | **obra/superpowers** | 276,488 | +41,366 ↑↑ | 4天前 | agent-config | Skill 生態系方法論參考來源；餵入 agent-config skill templates | 66/100 | **星數暴增**（235,122→276,488，本次追蹤中最大絕對成長）· 活躍 · 持續 release | 目錄/方法論型 repo，需自篩 | v6.3.0(08-12) | 60→66（+6，星數暴增+41,366↑↑ 給+5，release+1） | 本週瀏覽，摘錄方法論進 agent-config |
-| 20 | 🟢 | **upstash/context7** | 61,101 | +3,279 ↑ | 2天前 | 未導入（候選）/ Aletheia | 可為 Aletheia 提供 LLM-ready library docs；目前僅本 session `docs-lookup` agent（全域設定）呼叫，非專案層級整合 | 64/100 | LLM-ready docs · 多語言支援 | 需 API key 管理 · SDK 覆蓋率仍不足 · Aletheia repo 內無 repo-native 整合證據 | @upstash/context7-mcp@4.0.3(08-21) | 60→64（星數+3,279↑，release+2；2026-08-24 修正分類：已導入→未導入，因四個 active repo 均無引用） | 候選建議：若要導入，於 Aletheia 建立 .mcp.json/CLAUDE.md 實際串接證據，非急件 |
+| 20 | 🟢 | **upstash/context7** | 61,101 | +3,279 ↑ | 2天前 | 未導入（候選）/ Aletheia | 可為 Aletheia 提供 LLM-ready library docs；目前僅本 session `docs-lookup` agent（全域設定）呼叫，非專案層級整合 | 64/100 | LLM-ready docs · 多語言支援 | 需 API key 管理 · SDK 覆蓋率仍不足 · Aletheia repo 內無 repo-native 整合證據 | @upstash/context7-mcp@4.0.3(08-21) | 60→64（星數+3,279↑，release+2；2026-08-24 修正分類：已導入→未導入，因本次查證的四個 repositories 均無引用） | 候選建議：若要導入，於 Aletheia 建立 .mcp.json/CLAUDE.md 實際串接證據，非急件 |
 
 *同分排序原則：已導入 repos（✅標記）優先於分數相同的未導入 repos，因其已產生驗證過的實際價值。*
 
@@ -260,7 +260,7 @@
 
 ### ⚠️ 不活躍警告
 - `TauricResearch/TradingAgents`：由 baseline「今天 push」轉為 **36天前**，Top20 中唯一從活躍轉為不活躍者，需觀察下次是否恢復
-- `vancelin/openmemory`：**144天**無 commit（baseline為81天，惡化+63天）。**2026-08-24 修正**：原「已有確認可行替代方案（claude-mem），建議本週正式除役」的陳述已修正——即時查證顯示 openmemory 於四個 active repo 均無現行整合證據，project-pantheon `.mcp.json` 內的 dev-only entry 已於 commit `51297ba`（2026-06-22）移除，**目前並無待除役的實際整合**，此項為方法論誤判而非本週待辦事項
+- `vancelin/openmemory`：**144天**無 commit（baseline為81天，惡化+63天）。**2026-08-24 修正**：原「已有確認可行替代方案（claude-mem），建議本週正式除役」的陳述已修正——即時查證顯示 openmemory 於本次查證的四個 repositories 均無現行整合證據，project-pantheon `.mcp.json` 內的 dev-only entry 已於 commit `51297ba`（2026-06-22）移除，**目前並無待除役的實際整合**，此項為方法論誤判而非本週待辦事項
 
 ### 🔄 分類修正（非 repo 本身 pivot，屬本次報告方法論修正）
 - `crewAIInc/crewAI`、`anthropics/skills`、`google/skills`、`mattpocock/skills`：v20260622 報告列為「已導入」，本次依 requirements.txt/CLAUDE.md/.mcp.json 重新查證未找到直接證據，改列「未導入」評估
@@ -294,7 +294,7 @@
 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `NVIDIA/SkillSpector`：導入 agent-config 作為 skill 上線前安全掃描關卡 |
 | 持續觀察 | `TauricResearch/TradingAgents` 活躍度是否恢復（36天無 push） |
 | 持續觀察 | `NousResearch/hermes-agent` open issues/PRs 趨勢（11,912 open issues · 23,119 open PRs，2026-08-24 查證，`vancelin/openmemory` 原列的「本週除役」項目已確認為方法論誤判並移除，詳見「不活躍警告」：目前並無待除役的實際整合） |
-| 待 Human 決策 | 是否將 `ai-engineering-os` 或 `agent-config`（Portfolio Order 4R）併入下次 Gstar 追蹤的 active project 清單（詳見上方「專案宇宙變動偵測」2026-08-24 修正） |
+| 待 Human 決策 | 是否將 `ai-engineering-os` 或 `agent-config`（Portfolio Order 4R）併入下次 Gstar 追蹤清單（詳見上方「專案宇宙變動偵測」2026-08-24 修正） |
 
 ---
 
