@@ -2,8 +2,9 @@
 
 > Generated: 2026-08-23 · Live GitHub API data only, no caching
 > **修正版**（2026-08-24）：依獨立 Codex head-review 4 項 blocking findings 修正，見下方各節標註
+> **第二輪修正**（2026-08-24）：依獨立 Codex 對修正後 head 的 3 項 blocking findings 再次修正（Portfolio 宣稱、PART 2A 完整性、行動時程 governance gate），見下方各節標註
 > Total starred: **125**（pagination: page1=100, page2=25, page3=0 → 100+25=125）
-> Relevant scored: 125（3 已導入 + 122 未導入，其中 119 個列入 PART 2A 完整排序評估表；另 3 個〔`claude-mem`/`context7`/`openmemory`，2026-08-24 修正版重新分類〕未重新排入 PART 2A 排序表，其未導入狀態與評分變化見 PART 1 修正說明與 PART 2B 對應列，Top 20 見 Part 2B）
+> Relevant scored: 125（3 已導入 + 122 未導入，全數 122 個未導入 repos 已列入 PART 2A 完整排序評估表；Top 20 見 PART 2B）
 > Previous report: `STARRED_REVIEW_v20260622.md`（total starred 96 → 淨增 +29，成長 30.2%）
 
 ---
@@ -84,11 +85,11 @@
 
 ---
 
-## PART 2A — 未導入 repos 全評估（119 repos，依契合度排序）
+## PART 2A — 未導入 repos 全評估（122 repos，依契合度排序）
 
-> 評分方法：Top 20（🏆標記）採人工逐項評估（活躍度、release、星數成長、對五個 active project 的具體價值）；其餘 99 個採統一啟發式（關鍵字相關性 + 活躍度 + 語言 + 中文內容加權），力求涵蓋全部 119 個未導入 starred repos，避免遺漏。契合度 <60 者多為目錄型/教學型/與五個 active project 無直接技術重疊的 repo，標記「觀察中」代表暫無明確導入路徑。
+> 評分方法：Top 20（🏆標記）採人工逐項評估（活躍度、release、星數成長、對五個 active project 的具體價值）；其餘 repos 採統一啟發式（關鍵字相關性 + 活躍度 + 語言 + 中文內容加權），力求涵蓋全部 122 個未導入 starred repos，避免遺漏。契合度 <60 者多為目錄型/教學型/與五個 active project 無直接技術重疊的 repo，標記「觀察中」代表暫無明確導入路徑。
 >
-> **2026-08-24 修正版註記**：`thedotmack/claude-mem`（83/100）、`upstash/context7`（64/100）、`vancelin/openmemory`（未評分）三者於本次修正後改列「未導入」，但為避免在一次 bounded correction 中對整份 119 項排序表做未經完整覆核的重新排名，本次**未將三者插入下表排序**；其未導入分類、契合度、評分變化與建議行動請見 PART 1 修正說明（openmemory）與 PART 2B Top 20 對應列（claude-mem 原排名7、context7 原排名20）。下次完整報告週期應將三者正式併入本表排序。
+> **2026-08-24 第二輪修正**：`thedotmack/claude-mem`（83/100，#6）、`upstash/context7`（64/100，#21）、`vancelin/openmemory`（未評分，列於表末 #122）三者已正式依契合度插入下表排序並重新編號，移除前次「延後排入下次報告週期」的例外處理。`openmemory` 因未評分，依一致排序規則置於表末。
 
 | # | Repo | ⭐ | 狀態 | 最後Push | 建議專案 | 契合度 | 備註 |
 |---|------|----|----|---------|---------|--------|------|
@@ -97,120 +98,123 @@
 | 3 | **crewAIInc/crewAI** 🏆 | 57,497 | 🟢 | 2026-08-22 | Pantheon | 87/100 | 多 agent 框架，Stage 3 對照組（本次重新分類為未導入） |
 | 4 | **TauricResearch/TradingAgents** 🏆 | 99,360 | ⚪ | 2026-07-18 | Pantheon | 86/100 | 星數大漲但轉為不活躍，需觀察 |
 | 5 | **msitarzewski/agency-agents** 🏆 | 147,476 | 🟢 | 2026-08-06 | Raphael | 83/100 | 星數暴增，sub-agent 人格化模式參考 |
-| 6 | **Graphify-Labs/graphify** 🏆 | 109,684 | 🟢 | 2026-08-20 | Aletheia | 78/100 | 程式碼/文件/SQL 知識圖譜化，補 GitNexus 之外的資料源 |
-| 7 | **rohitg00/agentmemory** 🏆 | 27,296 | 🟢 | 2026-08-17 | Pantheon | 77/100 | Memory layer 基準測試對照 langmem |
-| 8 | **NVIDIA/SkillSpector** 🏆 | 14,890 | 🟢 | 2026-08-22 | agent-config | 76/100 | Skill 安全掃描，直接呼應 security.md 治理需求 |
-| 9 | **headroomlabs-ai/headroom** 🏆 | 67,241 | 🟢 | 2026-08-22 | Pantheon+Aletheia | 74/100 | 壓縮 LLM 輸入 token，降低 LiteLLM 呼叫成本 |
-| 10 | **rtk-ai/rtk** 🏆 | 77,125 | 🟢 | 2026-08-22 | Pantheon+Aletheia | 72/100 | CLI 層級 token 節流，補 headroom 之外場景 |
-| 11 | **comet-ml/opik** 🏆 | 21,547 | 🟢 | 2026-08-23 | Pantheon | 70/100 | LLM 應用追蹤/評估平台，補目前僅 structlog 的可觀測性缺口 |
-| 12 | **THU-MAIC/OpenMAIC** 🏆 | 20,860 | 🟢 | 2026-08-23 | Pantheon | 70/100 | 多 agent 互動課堂實作參考 |
-| 13 | **Panniantong/Agent-Reach** 🏆 | 74,313 | 🟢 | 2026-08-12 | Raphael | 68/100 | 多平台資訊蒐集 CLI，Raphael 顧問層輸入來源 |
-| 14 | **ComposioHQ/awesome-claude-skills** 🏆 | 73,073 | 🟢 | 2026-08-10 | agent-config | 68/100 | Skill 目錄，活躍度回升（30天前→13天前） |
-| 15 | **obra/superpowers** 🏆 | 276,488 | 🟢 | 2026-08-19 | agent-config | 66/100 | Skill 框架方法論，星數持續暴增 |
-| 16 | **mateaix/mateclaw** | 1,036 | 🟢 | 2026-08-22 | Raphael | 65/100 | 第二大腦，Multi-Agent Orchestration + MCP + Memory |
-| 17 | **MemTensor/memmy-agent** | 920 | 🟢 | 2026-08-21 | Raphael | 65/100 | 個人 AI agent 共享記憶庫，支援 Hermes Agent |
-| 18 | **browser-use/browser-use** | 110,205 | 🟢 | 2026-08-22 | Pantheon | 64/100 | 60→64（+4，星數+10,244 ↑↑，release 0.13.8） |
-| 19 | **santifer/career-ops** | 67,873 | 🟢 | 2026-08-23 | agent-config | 64/100 | 60→64（+4，星數+12,800 ↑↑，持續 release） |
-| 20 | **n8n-io/n8n** | 202,048 | 🟢 | 2026-08-23 | 觀察中 | 63/100 | 60→63（+3，星數+8,513 ↑，持續 release） |
-| 21 | **punkpeye/awesome-mcp-servers** | 92,710 | 🟢 | 2026-08-17 | 觀察中 | 62/100 | 60→62（+2，星數+3,145 ↑） |
-| 22 | **microsoft/ai-agents-for-beginners** | 73,046 | 🟢 | 2026-08-18 | Pantheon | 62/100 | 60→62（+2，星數+5,363 ↑） |
-| 23 | **alirezarezvani/claude-skills** | 24,833 | 🟢 | 2026-08-21 | agent-config | 62/100 | 60→62（+2，星數+6,101 ↑，release 已停滯於 05-28） |
-| 24 | **coreyhaines31/marketingskills** | 45,333 | 🟢 | 2026-08-22 | agent-config | 61/100 | Marketing skills for Claude Code and AI agents |
-| 25 | **nexu-io/html-anything** | 8,420 | 🟢 | 2026-08-23 | agent-config | 61/100 | Agentic HTML editor，75 skills × 9 surfaces |
-| 26 | **Imbad0202/academic-research-skills** | 43,395 | 🟢 | 2026-08-20 | agent-config | 58/100 | Academic Research Skills for Claude Code |
-| 27 | **Weizhena/Deep-Research-skills** | 2,001 | 🟢 | 2026-08-23 | agent-config | 58/100 | Structured deep research skill |
-| 28 | **tinyhumansai/openhuman** | 36,520 | 🟢 | 2026-08-23 | Raphael | 56/100 | Personal AI，local-first memory + agent fleet |
-| 29 | **luongnv89/claude-howto** | 41,161 | 🟢 | 2026-08-19 | Pantheon | 55/100 | Claude Code 視覺化教學指南 |
-| 30 | **virgiliojr94/book-to-skill** | 24,328 | 🟢 | 2026-08-19 | agent-config | 54/100 | 技術書 PDF 轉 Claude Code skill |
-| 31 | **tt-a1i/archify** | 15,112 | 🟢 | 2026-08-22 | agent-config | 52/100 | 架構圖/流程圖 skill |
-| 32 | **Nutlope/hallmark** | 26,692 | 🟢 | 2026-08-06 | agent-config | 51/100 | Anti-AI-slop 設計 skill |
-| 33 | **nidhinjs/prompt-master** | 11,632 | ⚪ | 2026-06-10 | Raphael | 51/100 | Prompt 撰寫 skill（不活躍） |
-| 34 | **aqua5230/usage** | 297 | 🟢 | 2026-08-23 | 觀察中 | 51/100 | Claude Code/Codex 用量追蹤 menu bar app |
-| 35 | **anthropics/skills** | 171,107 | 🟢 | 2026-08-21 | agent-config | 50/100 | 官方 Agent Skills repo（本次重新分類為未導入） |
-| 36 | **vercel-labs/skills** | 29,501 | 🟢 | 2026-08-18 | agent-config | 50/100 | Open agent skills 工具 |
-| 37 | **google/skills** | 18,622 | 🟢 | 2026-08-22 | agent-config | 50/100 | Google 官方 Agent Skills（本次重新分類為未導入） |
-| 38 | **anysearch-ai/anysearch-skill** | 5,857 | 🟢 | 2026-08-21 | agent-config | 50/100 | 統一即時搜尋引擎 skill |
-| 39 | **tradecatlabs/vibe-coding-cn**（fork of EnzeD/vibe-coding） | 15,961 | 🟢 | 2026-08-04 | Aletheia | 49/100 | 中文 Vibe Coding 教程 |
-| 40 | **mattpocock/skills** | 233,171 | 🟢 | 2026-08-21 | agent-config | 47/100 | Skill 目錄，星數暴增（本次重新分類為未導入） |
-| 41 | **addyosmani/agent-skills** | 89,201 | 🟢 | 2026-08-21 | agent-config | 47/100 | Production-grade engineering skills |
-| 42 | **op7418/guizang-ppt-skill** | 24,663 | 🟢 | 2026-08-07 | agent-config | 47/100 | HTML 簡報生成 skill |
-| 43 | **revfactory/harness** | 8,819 | 🟢 | 2026-07-24 | agent-config | 47/100 | Meta-skill，設計 domain-specific agent team |
-| 44 | **Agent-Threat-Rule/agent-threat-rules** | 373 | 🟢 | 2026-08-23 | agent-config | 47/100 | AI agent 安全威脅偵測規則標準 |
-| 45 | **Raymondhou0917/claude-code-resources** | 281 | 🟢 | 2026-08-22 | 觀察中 | 46/100 | 中文 Claude Code 學習資源 |
-| 46 | **kelvinschen/acpus** | 39 | 🟢 | 2026-08-20 | Pantheon | 46/100 | ACP agent 編排，crash-survive workflow |
-| 47 | **Alishahryar1/free-claude-code** | 47,577 | 🟢 | 2026-08-23 | 觀察中 | 45/100 | 免費 Claude Code/Codex 額度工具 |
-| 48 | **NYCU-Chung/cc-statusline** | 263 | ⚪ | 2026-05-22 | Pantheon | 45/100 | Claude Code statusline dashboard |
-| 49 | **shengyanlin/claude-overlay** | 87 | 🟢 | 2026-08-23 | 觀察中 | 45/100 | Windows 螢幕感知 Claude Code chat |
-| 50 | **S40911120/recensa** | 69 | 🟢 | 2026-08-16 | 觀察中 | 45/100 | Claude Code session transcript 檢視器 |
-| 51 | **op7418/guizang-social-card-skill** | 6,552 | ⚪ | 2026-07-01 | Aletheia | 44/100 | 小紅書/公眾號封面生成 skill（不活躍） |
-| 52 | **imraywang/wewrite** | 3,156 | 🟢 | 2026-08-17 | Aletheia | 44/100 | 公眾號內容全流程 skill |
-| 53 | **decolua/9router** | 26,114 | 🟢 | 2026-08-14 | 觀察中 | 42/100 | 免費 AI coding provider 路由 |
-| 54 | **VoltAgent/awesome-claude-code-subagents** | 24,563 | 🟢 | 2026-08-12 | Pantheon | 42/100 | 100+ 專用 subagent 集合 |
-| 55 | **zakirkun/deep-eye** | 2,180 | 🟢 | 2026-08-21 | agent-config | 42/100 | AI 驅動漏洞掃描與合規報告 |
-| 56 | **paperclipai/paperclip** | 79,215 | 🟢 | 2026-08-23 | Pantheon | 41/100 | Agent 管理 app |
-| 57 | **stablyai/orca** | 51,526 | 🟢 | 2026-08-23 | Pantheon | 41/100 | 平行 agent fleet ADE |
-| 58 | **HKUDS/CLI-Anything** | 47,981 | 🟢 | 2026-08-21 | Pantheon | 41/100 | CLI Agent-Native 化框架 |
-| 59 | **mindfold-ai/Trellis** | 14,164 | 🟢 | 2026-08-21 | Pantheon | 41/100 | Agent harness |
-| 60 | **worldwonderer/oh-story-claudecode** | 5,966 | 🟢 | 2026-08-22 | Aletheia | 41/100 | 網文寫作 skill 包 |
-| 61 | **hardness1020/awesome-agent-architecture** | 618 | 🟢 | 2026-08-21 | Pantheon | 41/100 | AI agent 架構學習資源 |
-| 62 | **criptogus/HermesOffice** | 518 | 🟢 | 2026-08-13 | Pantheon | 41/100 | Hermes Agent 驅動的 AI 原生辦公套件 |
-| 63 | **op7418/Humanizer-zh** | 15,887 | ⚪ | 2026-01-19 | Aletheia | 39/100 | 中文去 AI 味 skill（不活躍） |
-| 64 | **DietrichGebert/ponytail** | 108,521 | 🟢 | 2026-08-07 | Pantheon | 38/100 | Agent「少寫程式碼」哲學 skill |
-| 65 | **JCodesMore/ai-website-cloner-template** | 32,866 | 🟢 | 2026-08-14 | Pantheon | 38/100 | 一鍵網站複製工具 |
-| 66 | **xai-org/grok-build** | 25,915 | 🟢 | 2026-08-23 | Pantheon | 38/100 | Coding agent harness/TUI |
-| 67 | **joeseesun/qiaomu-anything-to-notebooklm** | 5,783 | ⚪ | 2026-04-28 | agent-config | 38/100 | 多來源內容轉 NotebookLM（不活躍） |
-| 68 | **linuxhsj/openclaw-zero-token** | 5,150 | 🟢 | 2026-08-17 | 觀察中 | 37/100 | 免 Token 使用各大模型 |
-| 69 | **alchaincyf/nuwa-skill** | 31,181 | 🟢 | 2026-07-27 | 觀察中 | 35/100 | 思維模式蒸餾 skill |
-| 70 | **mengxi-ream/read-frog** | 9,315 | 🟢 | 2026-08-23 | 觀察中 | 35/100 | 語言學習與翻譯瀏覽器擴充 |
-| 71 | **Thysrael/Horizon** | 8,999 | 🟢 | 2026-08-23 | 觀察中 | 35/100 | AI 新聞雷達每日簡報 |
-| 72 | **freestylefly/CodexGuide** | 3,245 | 🟢 | 2026-08-20 | 觀察中 | 35/100 | Codex 中文實踐指南 |
-| 73 | **notoriouslab/doc-cleaner** | 310 | 🟢 | 2026-08-20 | Aletheia | 35/100 | 文件轉 Markdown（16種格式） |
-| 74 | **mathruffian-dot/claude-code-lazy-packs** | 243 | ⚪ | 2026-06-12 | 觀察中 | 33/100 | Claude Code 懶人包（不活躍） |
-| 75 | **lbjlaq/Antigravity-Manager** | 30,629 | 🟢 | 2026-08-23 | 觀察中 | 32/100 | 帳號管理切換工具 |
-| 76 | **freestylefly/awesome-gpt-image-2** | 12,403 | 🟢 | 2026-08-23 | Aletheia | 32/100 | GPT-Image2 提示詞工程模板庫 |
-| 77 | **bozhouDev/codex-orange-book** | 3,264 | 🟢 | 2026-08-14 | 觀察中 | 32/100 | Codex 橙皮書使用指南 |
-| 78 | **voidful/hung-yi-lee-skill** | 973 | 🟢 | 2026-08-11 | Aletheia | 32/100 | 李宏毅老師教學蒸餾 skill |
-| 79 | **OpenHands/OpenHands** | 84,836 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | AI-driven development 框架 |
-| 80 | **jamiepine/voicebox** | 51,181 | 🟢 | 2026-08-09 | 觀察中 | 31/100 | AI 語音工作室 |
-| 81 | **soxoj/maigret** | 36,972 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | 使用者名稱跨站調查工具 |
-| 82 | **openai/codex-plugin-cc** | 32,210 | ⚪ | 2026-07-08 | 觀察中 | 31/100 | Claude Code 內呼叫 Codex（不活躍） |
-| 83 | **companion-inc/feynman** | 8,538 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | （無公開描述） |
-| 84 | **mcncarl/yichen-skills** | 1,924 | 🟢 | 2026-08-20 | 觀察中 | 31/100 | （無公開描述） |
-| 85 | **godotengine/godot** | 116,022 | 🟢 | 2026-08-21 | 觀察中 | 28/100 | 遊戲引擎（與五個 active project 無重疊） |
-| 86 | **apple/container** | 49,251 | 🟢 | 2026-08-20 | 觀察中 | 28/100 | macOS 輕量虛擬機容器工具 |
-| 87 | **AlexsJones/llmfit** | 33,658 | 🟢 | 2026-08-23 | 觀察中 | 28/100 | 硬體可跑模型比對工具 |
-| 88 | **tw93/Kami** | 10,866 | 🟢 | 2026-08-08 | 觀察中 | 28/100 | 內容排版工具 |
-| 89 | **Finb/Bark** | 8,934 | 🟢 | 2026-08-18 | 觀察中 | 28/100 | iOS 推播通知 app |
-| 90 | **zhongerxin/Cowart** | 5,644 | 🟢 | 2026-08-23 | 觀察中 | 28/100 | （無公開描述） |
-| 91 | **ombharatiya/ai-system-design-guide** | 2,719 | 🟢 | 2026-08-15 | 觀察中 | 28/100 | AI 系統設計指南 |
-| 92 | **ggwhite/4x** | 33 | 🟢 | 2026-08-23 | Pantheon | 28/100 | Design/Code/Review/Test 隔離角色開發迴圈 |
-| 93 | **notoriouslab/browser-mcp-lite** | 42 | ⚪ | 2026-04-02 | 觀察中 | 27/100 | 輕量瀏覽器 MCP server（不活躍） |
-| 94 | **multica-ai/andrej-karpathy-skills** | 205,578 | ⚪ | 2026-04-20 | 觀察中 | 26/100 | Karpathy CLAUDE.md 行為改善單檔（不活躍） |
-| 95 | **Zie619/n8n-workflows** | 56,232 | ⚪ | 2026-06-24 | 觀察中 | 25/100 | n8n workflow 收集（不活躍，另有整合中的 fork） |
-| 96 | **cloudflare/agentic-inbox** | 6,922 | ⚪ | 2026-04-23 | Pantheon | 25/100 | 自架 AI email client（不活躍） |
-| 97 | **zakirkun/guardian-cli** | 1,855 | ⚪ | 2026-06-27 | 觀察中 | 25/100 | 滲透測試自動化 CLI（不活躍） |
-| 98 | **alchaincyf/elon-musk-skill** | 489 | ⚪ | 2026-05-28 | Aletheia | 25/100 | 人物思維蒸餾 skill（不活躍） |
-| 99 | **jinggreen15/ai-design-team** | 189 | ⚪ | 2026-03-29 | agent-config | 25/100 | 多角色設計團隊 skill（不活躍） |
-| 100 | **tanweai/pua** | 19,476 | ⚪ | 2026-07-16 | Aletheia | 24/100 | 高能動性中文 skill（不活躍） |
-| 101 | **myyang19770915/Hybride_pageindex_RAG** | 47 | ⚪ | 2026-06-25 | Aletheia | 24/100 | 混合搜尋 RAG 專案（不活躍） |
-| 102 | **mboverell/ai-chief-of-staff** | 17 | ⚪ | 2026-01-25 | Pantheon | 22/100 | 會議筆記轉洞見系統（不活躍） |
-| 103 | **ai-twinkle/rlhf-book-zh-tw** | 177 | ⚪ | 2026-07-10 | 觀察中 | 21/100 | RLHF 繁中譯本（不活躍） |
-| 104 | **arxhr007/Aliens_eye** | 3,463 | ⚪ | 2026-07-16 | 觀察中 | 20/100 | 社群帳號搜尋工具（不活躍） |
-| 105 | **poccii/Faceting-Diagram-viewer** | 2 | ⚪ | 2026-07-14 | 觀察中 | 20/100 | 切割圖檢視器（不活躍） |
-| 106 | **salafadidas/Aletheia**（自有 repo） | 1 | ⚪ | 2026-06-27 | — | 20/100 | 自星標自有 repo，非外部候選 |
-| 107 | **salafadidas/project-pantheon**（自有 repo，fork of francescofano/langgraph-telegram-bot） | 1 | ⚪ | 2026-06-27 | — | 20/100 | 自星標自有 repo，非外部候選 |
-| 108 | **notoriouslab/gmail-statement-fetcher** | 19 | ⚪ | 2026-04-02 | 觀察中 | 19/100 | Gmail 帳單下載工具（不活躍） |
-| 109 | **ai-twinkle/Hub** | 186 | ⚪ | 2026-07-13 | 觀察中 | 17/100 | 社群回饋平台（不活躍） |
-| 110 | **mli/paper-reading** | 33,726 | ⚪ | 2025-03-22 | 觀察中 | 16/100 | 論文精讀（518天前，長期不活躍） |
-| 111 | **NousResearch/autoreason** | 599 | ⚪ | 2026-04-12 | 觀察中 | 16/100 | 主觀領域自動研究（不活躍） |
-| 112 | **Aider-AI/aider** | 48,415 | ⚪ | 2026-05-22 | 觀察中 | 15/100 | 終端 AI 結對編程（92天前不活躍） |
-| 113 | **op7418/Youtube-clipper-skill** | 2,154 | ⚪ | 2026-01-22 | 觀察中 | 15/100 | YouTube 剪輯 skill（不活躍） |
-| 114 | **fatwang2/siri-ultra**（fork of Sh4yy/personal-ai） | 1,206 | ⚪ | 2026-06-05 | 觀察中 | 15/100 | LLM 驅動 Siri（不活躍） |
-| 115 | **wellwind/claude-code-from-source-zh-tw** | 124 | ⚪ | 2026-04-14 | 觀察中 | 15/100 | 中文原始碼導讀（不活躍） |
-| 116 | **mukiwu/claude-code-tips** | 40 | ⚪ | 2026-04-19 | 觀察中 | 15/100 | Claude Code 使用技巧（不活躍） |
-| 117 | **doggy8088/gpt4o-tokenizer** | 18 | ⚪ | 2026-05-31 | 觀察中 | 15/100 | Tokenizer 工具（不活躍） |
-| 118 | **salafadidas/SeongJinWoo**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
-| 119 | **salafadidas/Garden-Party**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
+| 6 | **thedotmack/claude-mem** | 91,568 | 🟢 | 2026-08-21 | Raphael+agent-config（候選） | 83/100 | 2026-08-24 修正併入：四個 active repo 均無 repo-native 整合證據（見 PART 1），原「已導入」為誤判，改列未導入候選 |
+| 7 | **Graphify-Labs/graphify** 🏆 | 109,684 | 🟢 | 2026-08-20 | Aletheia | 78/100 | 程式碼/文件/SQL 知識圖譜化，補 GitNexus 之外的資料源 |
+| 8 | **rohitg00/agentmemory** 🏆 | 27,296 | 🟢 | 2026-08-17 | Pantheon | 77/100 | Memory layer 基準測試對照 langmem |
+| 9 | **NVIDIA/SkillSpector** 🏆 | 14,890 | 🟢 | 2026-08-22 | agent-config | 76/100 | Skill 安全掃描，直接呼應 security.md 治理需求 |
+| 10 | **headroomlabs-ai/headroom** 🏆 | 67,241 | 🟢 | 2026-08-22 | Pantheon+Aletheia | 74/100 | 壓縮 LLM 輸入 token，降低 LiteLLM 呼叫成本 |
+| 11 | **rtk-ai/rtk** 🏆 | 77,125 | 🟢 | 2026-08-22 | Pantheon+Aletheia | 72/100 | CLI 層級 token 節流，補 headroom 之外場景 |
+| 12 | **comet-ml/opik** 🏆 | 21,547 | 🟢 | 2026-08-23 | Pantheon | 70/100 | LLM 應用追蹤/評估平台，補目前僅 structlog 的可觀測性缺口 |
+| 13 | **THU-MAIC/OpenMAIC** 🏆 | 20,860 | 🟢 | 2026-08-23 | Pantheon | 70/100 | 多 agent 互動課堂實作參考 |
+| 14 | **Panniantong/Agent-Reach** 🏆 | 74,313 | 🟢 | 2026-08-12 | Raphael | 68/100 | 多平台資訊蒐集 CLI，Raphael 顧問層輸入來源 |
+| 15 | **ComposioHQ/awesome-claude-skills** 🏆 | 73,073 | 🟢 | 2026-08-10 | agent-config | 68/100 | Skill 目錄，活躍度回升（30天前→13天前） |
+| 16 | **obra/superpowers** 🏆 | 276,488 | 🟢 | 2026-08-19 | agent-config | 66/100 | Skill 框架方法論，星數持續暴增 |
+| 17 | **mateaix/mateclaw** | 1,036 | 🟢 | 2026-08-22 | Raphael | 65/100 | 第二大腦，Multi-Agent Orchestration + MCP + Memory |
+| 18 | **MemTensor/memmy-agent** | 920 | 🟢 | 2026-08-21 | Raphael | 65/100 | 個人 AI agent 共享記憶庫，支援 Hermes Agent |
+| 19 | **browser-use/browser-use** | 110,205 | 🟢 | 2026-08-22 | Pantheon | 64/100 | 60→64（+4，星數+10,244 ↑↑，release 0.13.8） |
+| 20 | **santifer/career-ops** | 67,873 | 🟢 | 2026-08-23 | agent-config | 64/100 | 60→64（+4，星數+12,800 ↑↑，持續 release） |
+| 21 | **upstash/context7** | 61,101 | 🟢 | 2026-08-21 | Aletheia（候選） | 64/100 | 2026-08-24 修正併入：Aletheia repo 內無 repo-native 整合證據（僅本 session 全域 agent 設定使用），原「已導入」為誤判，改列未導入候選 |
+| 22 | **n8n-io/n8n** | 202,048 | 🟢 | 2026-08-23 | 觀察中 | 63/100 | 60→63（+3，星數+8,513 ↑，持續 release） |
+| 23 | **punkpeye/awesome-mcp-servers** | 92,710 | 🟢 | 2026-08-17 | 觀察中 | 62/100 | 60→62（+2，星數+3,145 ↑） |
+| 24 | **microsoft/ai-agents-for-beginners** | 73,046 | 🟢 | 2026-08-18 | Pantheon | 62/100 | 60→62（+2，星數+5,363 ↑） |
+| 25 | **alirezarezvani/claude-skills** | 24,833 | 🟢 | 2026-08-21 | agent-config | 62/100 | 60→62（+2，星數+6,101 ↑，release 已停滯於 05-28） |
+| 26 | **coreyhaines31/marketingskills** | 45,333 | 🟢 | 2026-08-22 | agent-config | 61/100 | Marketing skills for Claude Code and AI agents |
+| 27 | **nexu-io/html-anything** | 8,420 | 🟢 | 2026-08-23 | agent-config | 61/100 | Agentic HTML editor，75 skills × 9 surfaces |
+| 28 | **Imbad0202/academic-research-skills** | 43,395 | 🟢 | 2026-08-20 | agent-config | 58/100 | Academic Research Skills for Claude Code |
+| 29 | **Weizhena/Deep-Research-skills** | 2,001 | 🟢 | 2026-08-23 | agent-config | 58/100 | Structured deep research skill |
+| 30 | **tinyhumansai/openhuman** | 36,520 | 🟢 | 2026-08-23 | Raphael | 56/100 | Personal AI，local-first memory + agent fleet |
+| 31 | **luongnv89/claude-howto** | 41,161 | 🟢 | 2026-08-19 | Pantheon | 55/100 | Claude Code 視覺化教學指南 |
+| 32 | **virgiliojr94/book-to-skill** | 24,328 | 🟢 | 2026-08-19 | agent-config | 54/100 | 技術書 PDF 轉 Claude Code skill |
+| 33 | **tt-a1i/archify** | 15,112 | 🟢 | 2026-08-22 | agent-config | 52/100 | 架構圖/流程圖 skill |
+| 34 | **Nutlope/hallmark** | 26,692 | 🟢 | 2026-08-06 | agent-config | 51/100 | Anti-AI-slop 設計 skill |
+| 35 | **nidhinjs/prompt-master** | 11,632 | ⚪ | 2026-06-10 | Raphael | 51/100 | Prompt 撰寫 skill（不活躍） |
+| 36 | **aqua5230/usage** | 297 | 🟢 | 2026-08-23 | 觀察中 | 51/100 | Claude Code/Codex 用量追蹤 menu bar app |
+| 37 | **anthropics/skills** | 171,107 | 🟢 | 2026-08-21 | agent-config | 50/100 | 官方 Agent Skills repo（本次重新分類為未導入） |
+| 38 | **vercel-labs/skills** | 29,501 | 🟢 | 2026-08-18 | agent-config | 50/100 | Open agent skills 工具 |
+| 39 | **google/skills** | 18,622 | 🟢 | 2026-08-22 | agent-config | 50/100 | Google 官方 Agent Skills（本次重新分類為未導入） |
+| 40 | **anysearch-ai/anysearch-skill** | 5,857 | 🟢 | 2026-08-21 | agent-config | 50/100 | 統一即時搜尋引擎 skill |
+| 41 | **tradecatlabs/vibe-coding-cn**（fork of EnzeD/vibe-coding） | 15,961 | 🟢 | 2026-08-04 | Aletheia | 49/100 | 中文 Vibe Coding 教程 |
+| 42 | **mattpocock/skills** | 233,171 | 🟢 | 2026-08-21 | agent-config | 47/100 | Skill 目錄，星數暴增（本次重新分類為未導入） |
+| 43 | **addyosmani/agent-skills** | 89,201 | 🟢 | 2026-08-21 | agent-config | 47/100 | Production-grade engineering skills |
+| 44 | **op7418/guizang-ppt-skill** | 24,663 | 🟢 | 2026-08-07 | agent-config | 47/100 | HTML 簡報生成 skill |
+| 45 | **revfactory/harness** | 8,819 | 🟢 | 2026-07-24 | agent-config | 47/100 | Meta-skill，設計 domain-specific agent team |
+| 46 | **Agent-Threat-Rule/agent-threat-rules** | 373 | 🟢 | 2026-08-23 | agent-config | 47/100 | AI agent 安全威脅偵測規則標準 |
+| 47 | **Raymondhou0917/claude-code-resources** | 281 | 🟢 | 2026-08-22 | 觀察中 | 46/100 | 中文 Claude Code 學習資源 |
+| 48 | **kelvinschen/acpus** | 39 | 🟢 | 2026-08-20 | Pantheon | 46/100 | ACP agent 編排，crash-survive workflow |
+| 49 | **Alishahryar1/free-claude-code** | 47,577 | 🟢 | 2026-08-23 | 觀察中 | 45/100 | 免費 Claude Code/Codex 額度工具 |
+| 50 | **NYCU-Chung/cc-statusline** | 263 | ⚪ | 2026-05-22 | Pantheon | 45/100 | Claude Code statusline dashboard |
+| 51 | **shengyanlin/claude-overlay** | 87 | 🟢 | 2026-08-23 | 觀察中 | 45/100 | Windows 螢幕感知 Claude Code chat |
+| 52 | **S40911120/recensa** | 69 | 🟢 | 2026-08-16 | 觀察中 | 45/100 | Claude Code session transcript 檢視器 |
+| 53 | **op7418/guizang-social-card-skill** | 6,552 | ⚪ | 2026-07-01 | Aletheia | 44/100 | 小紅書/公眾號封面生成 skill（不活躍） |
+| 54 | **imraywang/wewrite** | 3,156 | 🟢 | 2026-08-17 | Aletheia | 44/100 | 公眾號內容全流程 skill |
+| 55 | **decolua/9router** | 26,114 | 🟢 | 2026-08-14 | 觀察中 | 42/100 | 免費 AI coding provider 路由 |
+| 56 | **VoltAgent/awesome-claude-code-subagents** | 24,563 | 🟢 | 2026-08-12 | Pantheon | 42/100 | 100+ 專用 subagent 集合 |
+| 57 | **zakirkun/deep-eye** | 2,180 | 🟢 | 2026-08-21 | agent-config | 42/100 | AI 驅動漏洞掃描與合規報告 |
+| 58 | **paperclipai/paperclip** | 79,215 | 🟢 | 2026-08-23 | Pantheon | 41/100 | Agent 管理 app |
+| 59 | **stablyai/orca** | 51,526 | 🟢 | 2026-08-23 | Pantheon | 41/100 | 平行 agent fleet ADE |
+| 60 | **HKUDS/CLI-Anything** | 47,981 | 🟢 | 2026-08-21 | Pantheon | 41/100 | CLI Agent-Native 化框架 |
+| 61 | **mindfold-ai/Trellis** | 14,164 | 🟢 | 2026-08-21 | Pantheon | 41/100 | Agent harness |
+| 62 | **worldwonderer/oh-story-claudecode** | 5,966 | 🟢 | 2026-08-22 | Aletheia | 41/100 | 網文寫作 skill 包 |
+| 63 | **hardness1020/awesome-agent-architecture** | 618 | 🟢 | 2026-08-21 | Pantheon | 41/100 | AI agent 架構學習資源 |
+| 64 | **criptogus/HermesOffice** | 518 | 🟢 | 2026-08-13 | Pantheon | 41/100 | Hermes Agent 驅動的 AI 原生辦公套件 |
+| 65 | **op7418/Humanizer-zh** | 15,887 | ⚪ | 2026-01-19 | Aletheia | 39/100 | 中文去 AI 味 skill（不活躍） |
+| 66 | **DietrichGebert/ponytail** | 108,521 | 🟢 | 2026-08-07 | Pantheon | 38/100 | Agent「少寫程式碼」哲學 skill |
+| 67 | **JCodesMore/ai-website-cloner-template** | 32,866 | 🟢 | 2026-08-14 | Pantheon | 38/100 | 一鍵網站複製工具 |
+| 68 | **xai-org/grok-build** | 25,915 | 🟢 | 2026-08-23 | Pantheon | 38/100 | Coding agent harness/TUI |
+| 69 | **joeseesun/qiaomu-anything-to-notebooklm** | 5,783 | ⚪ | 2026-04-28 | agent-config | 38/100 | 多來源內容轉 NotebookLM（不活躍） |
+| 70 | **linuxhsj/openclaw-zero-token** | 5,150 | 🟢 | 2026-08-17 | 觀察中 | 37/100 | 免 Token 使用各大模型 |
+| 71 | **alchaincyf/nuwa-skill** | 31,181 | 🟢 | 2026-07-27 | 觀察中 | 35/100 | 思維模式蒸餾 skill |
+| 72 | **mengxi-ream/read-frog** | 9,315 | 🟢 | 2026-08-23 | 觀察中 | 35/100 | 語言學習與翻譯瀏覽器擴充 |
+| 73 | **Thysrael/Horizon** | 8,999 | 🟢 | 2026-08-23 | 觀察中 | 35/100 | AI 新聞雷達每日簡報 |
+| 74 | **freestylefly/CodexGuide** | 3,245 | 🟢 | 2026-08-20 | 觀察中 | 35/100 | Codex 中文實踐指南 |
+| 75 | **notoriouslab/doc-cleaner** | 310 | 🟢 | 2026-08-20 | Aletheia | 35/100 | 文件轉 Markdown（16種格式） |
+| 76 | **mathruffian-dot/claude-code-lazy-packs** | 243 | ⚪ | 2026-06-12 | 觀察中 | 33/100 | Claude Code 懶人包（不活躍） |
+| 77 | **lbjlaq/Antigravity-Manager** | 30,629 | 🟢 | 2026-08-23 | 觀察中 | 32/100 | 帳號管理切換工具 |
+| 78 | **freestylefly/awesome-gpt-image-2** | 12,403 | 🟢 | 2026-08-23 | Aletheia | 32/100 | GPT-Image2 提示詞工程模板庫 |
+| 79 | **bozhouDev/codex-orange-book** | 3,264 | 🟢 | 2026-08-14 | 觀察中 | 32/100 | Codex 橙皮書使用指南 |
+| 80 | **voidful/hung-yi-lee-skill** | 973 | 🟢 | 2026-08-11 | Aletheia | 32/100 | 李宏毅老師教學蒸餾 skill |
+| 81 | **OpenHands/OpenHands** | 84,836 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | AI-driven development 框架 |
+| 82 | **jamiepine/voicebox** | 51,181 | 🟢 | 2026-08-09 | 觀察中 | 31/100 | AI 語音工作室 |
+| 83 | **soxoj/maigret** | 36,972 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | 使用者名稱跨站調查工具 |
+| 84 | **openai/codex-plugin-cc** | 32,210 | ⚪ | 2026-07-08 | 觀察中 | 31/100 | Claude Code 內呼叫 Codex（不活躍） |
+| 85 | **companion-inc/feynman** | 8,538 | 🟢 | 2026-08-23 | 觀察中 | 31/100 | （無公開描述） |
+| 86 | **mcncarl/yichen-skills** | 1,924 | 🟢 | 2026-08-20 | 觀察中 | 31/100 | （無公開描述） |
+| 87 | **godotengine/godot** | 116,022 | 🟢 | 2026-08-21 | 觀察中 | 28/100 | 遊戲引擎（與五個 active project 無重疊） |
+| 88 | **apple/container** | 49,251 | 🟢 | 2026-08-20 | 觀察中 | 28/100 | macOS 輕量虛擬機容器工具 |
+| 89 | **AlexsJones/llmfit** | 33,658 | 🟢 | 2026-08-23 | 觀察中 | 28/100 | 硬體可跑模型比對工具 |
+| 90 | **tw93/Kami** | 10,866 | 🟢 | 2026-08-08 | 觀察中 | 28/100 | 內容排版工具 |
+| 91 | **Finb/Bark** | 8,934 | 🟢 | 2026-08-18 | 觀察中 | 28/100 | iOS 推播通知 app |
+| 92 | **zhongerxin/Cowart** | 5,644 | 🟢 | 2026-08-23 | 觀察中 | 28/100 | （無公開描述） |
+| 93 | **ombharatiya/ai-system-design-guide** | 2,719 | 🟢 | 2026-08-15 | 觀察中 | 28/100 | AI 系統設計指南 |
+| 94 | **ggwhite/4x** | 33 | 🟢 | 2026-08-23 | Pantheon | 28/100 | Design/Code/Review/Test 隔離角色開發迴圈 |
+| 95 | **notoriouslab/browser-mcp-lite** | 42 | ⚪ | 2026-04-02 | 觀察中 | 27/100 | 輕量瀏覽器 MCP server（不活躍） |
+| 96 | **multica-ai/andrej-karpathy-skills** | 205,578 | ⚪ | 2026-04-20 | 觀察中 | 26/100 | Karpathy CLAUDE.md 行為改善單檔（不活躍） |
+| 97 | **Zie619/n8n-workflows** | 56,232 | ⚪ | 2026-06-24 | 觀察中 | 25/100 | n8n workflow 收集（不活躍，另有整合中的 fork） |
+| 98 | **cloudflare/agentic-inbox** | 6,922 | ⚪ | 2026-04-23 | Pantheon | 25/100 | 自架 AI email client（不活躍） |
+| 99 | **zakirkun/guardian-cli** | 1,855 | ⚪ | 2026-06-27 | 觀察中 | 25/100 | 滲透測試自動化 CLI（不活躍） |
+| 100 | **alchaincyf/elon-musk-skill** | 489 | ⚪ | 2026-05-28 | Aletheia | 25/100 | 人物思維蒸餾 skill（不活躍） |
+| 101 | **jinggreen15/ai-design-team** | 189 | ⚪ | 2026-03-29 | agent-config | 25/100 | 多角色設計團隊 skill（不活躍） |
+| 102 | **tanweai/pua** | 19,476 | ⚪ | 2026-07-16 | Aletheia | 24/100 | 高能動性中文 skill（不活躍） |
+| 103 | **myyang19770915/Hybride_pageindex_RAG** | 47 | ⚪ | 2026-06-25 | Aletheia | 24/100 | 混合搜尋 RAG 專案（不活躍） |
+| 104 | **mboverell/ai-chief-of-staff** | 17 | ⚪ | 2026-01-25 | Pantheon | 22/100 | 會議筆記轉洞見系統（不活躍） |
+| 105 | **ai-twinkle/rlhf-book-zh-tw** | 177 | ⚪ | 2026-07-10 | 觀察中 | 21/100 | RLHF 繁中譯本（不活躍） |
+| 106 | **arxhr007/Aliens_eye** | 3,463 | ⚪ | 2026-07-16 | 觀察中 | 20/100 | 社群帳號搜尋工具（不活躍） |
+| 107 | **poccii/Faceting-Diagram-viewer** | 2 | ⚪ | 2026-07-14 | 觀察中 | 20/100 | 切割圖檢視器（不活躍） |
+| 108 | **salafadidas/Aletheia**（自有 repo） | 1 | ⚪ | 2026-06-27 | — | 20/100 | 自星標自有 repo，非外部候選 |
+| 109 | **salafadidas/project-pantheon**（自有 repo，fork of francescofano/langgraph-telegram-bot） | 1 | ⚪ | 2026-06-27 | — | 20/100 | 自星標自有 repo，非外部候選 |
+| 110 | **notoriouslab/gmail-statement-fetcher** | 19 | ⚪ | 2026-04-02 | 觀察中 | 19/100 | Gmail 帳單下載工具（不活躍） |
+| 111 | **ai-twinkle/Hub** | 186 | ⚪ | 2026-07-13 | 觀察中 | 17/100 | 社群回饋平台（不活躍） |
+| 112 | **mli/paper-reading** | 33,726 | ⚪ | 2025-03-22 | 觀察中 | 16/100 | 論文精讀（518天前，長期不活躍） |
+| 113 | **NousResearch/autoreason** | 599 | ⚪ | 2026-04-12 | 觀察中 | 16/100 | 主觀領域自動研究（不活躍） |
+| 114 | **Aider-AI/aider** | 48,415 | ⚪ | 2026-05-22 | 觀察中 | 15/100 | 終端 AI 結對編程（92天前不活躍） |
+| 115 | **op7418/Youtube-clipper-skill** | 2,154 | ⚪ | 2026-01-22 | 觀察中 | 15/100 | YouTube 剪輯 skill（不活躍） |
+| 116 | **fatwang2/siri-ultra**（fork of Sh4yy/personal-ai） | 1,206 | ⚪ | 2026-06-05 | 觀察中 | 15/100 | LLM 驅動 Siri（不活躍） |
+| 117 | **wellwind/claude-code-from-source-zh-tw** | 124 | ⚪ | 2026-04-14 | 觀察中 | 15/100 | 中文原始碼導讀（不活躍） |
+| 118 | **mukiwu/claude-code-tips** | 40 | ⚪ | 2026-04-19 | 觀察中 | 15/100 | Claude Code 使用技巧（不活躍） |
+| 119 | **doggy8088/gpt4o-tokenizer** | 18 | ⚪ | 2026-05-31 | 觀察中 | 15/100 | Tokenizer 工具（不活躍） |
+| 120 | **salafadidas/SeongJinWoo**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
+| 121 | **salafadidas/Garden-Party**（自有 repo） | 1 | ⚪ | 2026-06-14 | — | 15/100 | 自星標自有 repo，非外部候選 |
+| 122 | **vancelin/openmemory** | 106 | ⚪ | 144天前 | — | 未評分 | 2026-08-24 修正併入：四個 active repo 均無現行整合證據；project-pantheon 過去的 dev-only entry 已於 commit `51297ba`（2026-06-22）移除；未評分（非活躍候選），依一致排序規則置於表末 |
 
 ---
 
@@ -219,21 +223,21 @@
 | 排名 | 狀態 | Repo | 當前 Stars | 星數成長 | 最後 Push | 建議導入專案 | 核心價值 | 契合度 | 優點 | 缺點/風險 | 重要更新內容 | 評分變化 | 建議行動 |
 |------|------|------|-----------|---------|----------|-------------|----------|--------|------|-----------|------------|---------|---------|
 | 🥇 1 | 🟢 | **langchain-ai/langgraph** | 40,272 | +4,893 ↑ | 今天 | ✅已導入 / Pantheon | Pantheon 多 agent 編排骨幹，5-node graph 已運作，官方持續維護 | 100/100 | 官方支援 · 與 AsyncPostgresStore 原生整合 · 三模型 ensemble 相容 · 文件齊全 | API 版本更新快 · 與 langmem 分工需持續協調 | langgraph-sdk 0.4.3(08-19)、langgraph 1.2.11(08-11)、checkpoint-postgres 3.1.2(08-07) | 99→100（+1，持續活躍+新版） | 追蹤 1.2.x changelog，確認無 breaking change |
-| 🥈 2 | 🟢 | **nashsu/llm_wiki** | 16,684 | +4,320 ↑ | 2天前 | Aletheia | 中文桌面知識庫應用，持久化 wiki 取代傳統 RAG 每次重檢索 | 94/100 | 活躍度上升 · 星數穩定成長 · 與 Aletheia 中文語料需求高度契合 | 需評估桌面應用 vs API 整合方式 · 版本相容需確認 | v0.6.10(08-21) | 92→94（+2，星數+4,320↑，release） | Aletheia 下個 Sprint 評估桌面/API 整合路徑 |
+| 🥈 2 | 🟢 | **nashsu/llm_wiki** | 16,684 | +4,320 ↑ | 2天前 | Aletheia | 中文桌面知識庫應用，持久化 wiki 取代傳統 RAG 每次重檢索 | 94/100 | 活躍度上升 · 星數穩定成長 · 與 Aletheia 中文語料需求高度契合 | 需評估桌面應用 vs API 整合方式 · 版本相容需確認 | v0.6.10(08-21) | 92→94（+2，星數+4,320↑，release） | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 🥉 3 | 🟢 | **Egonex-AI/Understand-Anything** | 80,178 | +14,701 ↑↑ | 12天前 | Aletheia+Pantheon | 多模態程式碼知識圖譜，含 Figma 設計圖譜；Aletheia 後期擴充可用 | 88/100 | 星數大幅成長 · 支援 Claude Code/Codex/Cursor 多平台 · 圖譜視覺化完整 | 12天無新 push，動能略降溫 · 需評估與 GitNexus 的功能重疊 | v2.9.0(07-10) — Figma design graphs + .ua directory | 85→88（+3，星數+14,701↑↑） | Aletheia QMD 後接入，評估與 GitNexus 分工 |
-| 4 | 🟢 | **crewAIInc/crewAI** | 57,497 | +3,400 ↑ | 1天前 | Pantheon（Stage 3對照） | 另一條多 agent 路線；Pantheon Stage 3 架構決策的對照組 | 87/100 | 簡潔 API · 範本豐富 · 持續活躍 · 適合架構比較 | 與 LangGraph 雙軌維護成本高 · **本次確認未在 requirements.txt/CLAUDE.md 中找到整合證據，重新分類為未導入** | 1.15.17(08-20) | 85→87（+2，星數成長；分類修正：由「已導入」→「未導入」） | Stage 3 架構決策時對照評估，非本週急件 |
+| 4 | 🟢 | **crewAIInc/crewAI** | 57,497 | +3,400 ↑ | 1天前 | Pantheon（Stage 3對照） | 另一條多 agent 路線；Pantheon Stage 3 架構決策的對照組 | 87/100 | 簡潔 API · 範本豐富 · 持續活躍 · 適合架構比較 | 與 LangGraph 雙軌維護成本高 · **本次確認未在 requirements.txt/CLAUDE.md 中找到整合證據，重新分類為未導入** | 1.15.17(08-20) | 85→87（+2，星數成長；分類修正：由「已導入」→「未導入」） | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 5 | 🟢 | **NousResearch/hermes-agent** | 234,606 | +35,509 ↑↑ | 今天 | ✅已導入 / Raphael | Raphael Phase 1 直接基底；3-layer memory 與 MCP 原生支援 | 86/100 | Raphael 直接套用 · 內建 MCP+memory · 高頻釋出節奏 | **11,912 open issues · 23,119 open PRs**（2026-08-24 以 Search API 分別查證，取代原本合計誤導的 open_issues_count 34,923）· open PR 規模仍異常龐大，需評估維運健康度 · 暴增期穩定性待觀察 | v0.20.5(08-21)、v0.20.4(08-18)、v0.20.3(08-17) | 78→86（+8，星數暴增+5，新版+3） | Raphael Phase 1 持續採用，觀察 issue/PR backlog 趨勢 |
 | 6 | ⚪ | **TauricResearch/TradingAgents** | 99,360 | +11,510 ↑↑ | **36天前** | Pantheon | 多 agent + 領域知識完整實作範本；Stage 3 設計可參考 | 86/100 | 星數大幅成長 · 完整領域案例 | **由 baseline 的「今天 push」轉為 36天不活躍，動能明顯降溫，需觀察是否停止維護** | v0.3.1(07-05) | 85→86（+1，星數成長抵銷活躍度下滑疑慮） | 觀察下次 push，若持續不活躍則降低優先序 |
 | 7 | 🟢 | **thedotmack/claude-mem** | 91,568 | +7,978 ↑ | 2天前 | 未導入（候選）/ Raphael+agent-config | 跨 session context 記憶候選方案；project-pantheon 決策文件記載已評估但暫緩（Candidate D, not pursued） | 83/100 | 與 Claude 原生記憶模型一致 | 四個 active repo 均無 repo-native 整合證據（requirements.txt/.mcp.json/CLAUDE.md 均未引用）· 與 langmem 分工邊界未定 | v13.15.3(08-20) | 84→83（2026-08-24：移除原「確認導入狀態+1」加分，因無 repo-native 證據，本 session runtime 可用不構成證據） | 候選建議：若要導入，須先在 Raphael/agent-config 建立實際串接（CLAUDE.md 明確引用或 .mcp.json 設定），非急件 |
 | 8 | 🟢 | **msitarzewski/agency-agents** | 147,476 | +32,526 ↑↑ | 17天前 | Raphael | Agency 模式對 Raphael 多 sub-agent 架構有直接參考價值 | 83/100 | 星數暴增 · 人格化 sub-agent 範本豐富 | 17天未 push，動能趨緩 · 尚無正式 release | （無 release） | 78→83（+5，星數暴增） | Raphael sub-agent 人格化設計參考，本季瀏覽 |
-| 9 | 🟢 | **Graphify-Labs/graphify** | 109,684 | 首次追蹤 | 3天前 | Aletheia | 把 codebase/docs/SQL/PDF 轉成可查詢知識圖譜，local deterministic AST parsing | 78/100 | 星數高（10萬+）· 持續高頻 release · 支援 Claude Code/Cursor/Codex/Gemini CLI | 新進榜，長期穩定性待觀察 · 與現有 GitNexus 功能有重疊 | v0.9.48(08-20) | 新進榜 → 78 | Aletheia 評估與 GitNexus 分工（GitNexus 管程式碼，graphify 管文件/SQL） |
+| 9 | 🟢 | **Graphify-Labs/graphify** | 109,684 | 首次追蹤 | 3天前 | Aletheia | 把 codebase/docs/SQL/PDF 轉成可查詢知識圖譜，local deterministic AST parsing | 78/100 | 星數高（10萬+）· 持續高頻 release · 支援 Claude Code/Cursor/Codex/Gemini CLI | 新進榜，長期穩定性待觀察 · 與現有 GitNexus 功能有重疊 | v0.9.48(08-20) | 新進榜 → 78 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 10 | 🟢 | **rohitg00/agentmemory** | 27,296 | +3,668 ↑ | 6天前 | Pantheon | Memory layer 比較參考；對照目前 langmem 方案優缺點 | 77/100 | 活躍 · benchmark 導向 · 與生態系契合 | 整合工作量需評估 | v0.9.29(08-16) | 74→77（+3，星數+3,668↑，release） | 監控 release，作為 langmem 基準對照 |
-| 11 | 🟢 | **NVIDIA/SkillSpector** | 14,890 | 首次追蹤 | 1天前 | agent-config | Skill 安全掃描，偵測 Claude Code/Codex/MCP skill 的漏洞、惡意模式、prompt injection、供應鏈風險 | 76/100 | NVIDIA 出品可信度高 · 直接呼應 security.md 治理需求 · 高頻 release | 新進榜，尚未實測 | v2.9.6(08-18) | 新進榜 → 76 | **候選建議**（2026-08-24 修正）：agent-config 導入作為 skill 安全掃描關卡，屬 Portfolio/governance 層級決策，**候選 · 待 Portfolio 審核與 Human approval gate 核准後排程**，非本次 Gstar 報告可逕行排定的執行時程 |
+| 11 | 🟢 | **NVIDIA/SkillSpector** | 14,890 | 首次追蹤 | 1天前 | agent-config | Skill 安全掃描，偵測 Claude Code/Codex/MCP skill 的漏洞、惡意模式、prompt injection、供應鏈風險 | 76/100 | NVIDIA 出品可信度高 · 直接呼應 security.md 治理需求 · 高頻 release | 新進榜，尚未實測 | v2.9.6(08-18) | 新進榜 → 76 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 12 | 🟢 | **abhigyanpatwari/GitNexus** | 45,685 | +3,043 ↑ | 2天前 | ✅已導入 / Pantheon | 把 repo 轉成 knowledge graph；本 session 內 MCP 工具實際使用中 | 76/100 | 已導入且驗證有效 · 零伺服器 · 與 GitHub API 一致 | 仍為 RC 版本（rc.211），穩定性待觀察 | v1.6.10-rc.211(08-19) | 74→76（+2，星數穩定成長） | 持續使用，觀察正式版釋出時程 |
-| 13 | 🟢 | **headroomlabs-ai/headroom** | 67,241 | 首次追蹤 | 1天前 | Pantheon+Aletheia | 壓縮 tool outputs/logs/RAG chunks 再送進 LLM，token 降低 20-95% | 74/100 | 直接降低 LiteLLM 呼叫成本 · Library/proxy/MCP server 三種形式 · 每日 release | 新進榜，需驗證壓縮後答案品質 | v0.36.5(08-22) | 新進榜 → 74 | Pantheon/Aletheia 各挑一條 pipeline 做 PoC，驗證成本節省幅度 |
-| 14 | 🟢 | **rtk-ai/rtk** | 77,125 | 首次追蹤 | 1天前 | Pantheon+Aletheia | CLI proxy 降低常見開發指令 60-90% token 消耗，單一 Rust binary 零依賴 | 72/100 | 部署簡單（單 binary）· 與 headroom 互補（CLI層 vs API層）· 持續高頻 release | 新進榜，開發階段版號（dev-0.45.1-rc）顯示仍不穩定 | dev-0.45.1-rc.362(08-20) | 新進榜 → 72 | 待 headroom PoC 後一併評估，非本週急件 |
+| 13 | 🟢 | **headroomlabs-ai/headroom** | 67,241 | 首次追蹤 | 1天前 | Pantheon+Aletheia | 壓縮 tool outputs/logs/RAG chunks 再送進 LLM，token 降低 20-95% | 74/100 | 直接降低 LiteLLM 呼叫成本 · Library/proxy/MCP server 三種形式 · 每日 release | 新進榜，需驗證壓縮後答案品質 | v0.36.5(08-22) | 新進榜 → 74 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
+| 14 | 🟢 | **rtk-ai/rtk** | 77,125 | 首次追蹤 | 1天前 | Pantheon+Aletheia | CLI proxy 降低常見開發指令 60-90% token 消耗，單一 Rust binary 零依賴 | 72/100 | 部署簡單（單 binary）· 與 headroom 互補（CLI層 vs API層）· 持續高頻 release | 新進榜，開發階段版號（dev-0.45.1-rc）顯示仍不穩定 | dev-0.45.1-rc.362(08-20) | 新進榜 → 72 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 15 | 🟢 | **THU-MAIC/OpenMAIC** | 20,860 | +2,108 ↑ | 今天 | Pantheon | 多 agent 開源實作；可比對 Pantheon 目前 LangGraph 設計 | 70/100 | 活躍 · 持續 release · 教學情境完整 | 整合工作量需評估 | v0.3.2(08-14) | 67→70（+3，星數+2,108↑，release） | 監控 release，作為多 agent 互動設計參考 |
-| 16 | 🟢 | **comet-ml/opik** | 21,547 | 首次追蹤 | 今天 | Pantheon | LLM 應用 debug/評估/監控，補目前 Pantheon 僅有 structlog 的可觀測性缺口 | 70/100 | 完整 tracing+eval+dashboard · production-ready · 每日 release | 新進榜，需評估自架成本 vs SaaS 版 | 2.2.36(08-21) | 新進榜 → 70 | Pantheon Stage 3 前評估導入，補齊 observability |
+| 16 | 🟢 | **comet-ml/opik** | 21,547 | 首次追蹤 | 今天 | Pantheon | LLM 應用 debug/評估/監控，補目前 Pantheon 僅有 structlog 的可觀測性缺口 | 70/100 | 完整 tracing+eval+dashboard · production-ready · 每日 release | 新進榜，需評估自架成本 vs SaaS 版 | 2.2.36(08-21) | 新進榜 → 70 | 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 |
 | 17 | 🟢 | **ComposioHQ/awesome-claude-skills** | 73,073 | +7,622 ↑ | 13天前 | agent-config | Skill 生態系參考來源；餵入 agent-config 的 skill templates | 68/100 | 範本豐富 · **活躍度回升**（由baseline的30天不活躍→13天前） | 目錄型 repo，需自篩 | （無 release） | 64→68（+4，星數+7,622↑，活躍度回升+2） | 本週瀏覽，摘錄 skill 模板進 agent-config |
 | 18 | 🟢 | **Panniantong/Agent-Reach** | 74,313 | 首次追蹤 | 11天前 | Raphael | 讓 AI agent 讀取/搜尋 Twitter/Reddit/YouTube/GitHub 等，零 API 費用 | 68/100 | 一站式 CLI · 零 API 費用 · Raphael 顧問層資訊蒐集直接可用 | 11天未 push，release 已停滯於 06-11（動能降溫） | v1.5.0(06-11) | 新進榜 → 68 | Raphael 資訊蒐集層 PoC，觀察後續維護節奏 |
 | 19 | 🟢 | **obra/superpowers** | 276,488 | +41,366 ↑↑ | 4天前 | agent-config | Skill 生態系方法論參考來源；餵入 agent-config skill templates | 66/100 | **星數暴增**（235,122→276,488，本次追蹤中最大絕對成長）· 活躍 · 持續 release | 目錄/方法論型 repo，需自篩 | v6.3.0(08-12) | 60→66（+6，星數暴增+41,366↑↑ 給+5，release+1） | 本週瀏覽，摘錄方法論進 agent-config |
@@ -271,20 +275,25 @@
 - `headroomlabs-ai/headroom`：v0.36.5 (08-22，每日高頻)
 
 ### 🌐 專案宇宙 pivot（見上方「專案宇宙概覽」）
-- `ecosystem-blueprint` 治理角色轉為 Terminal/Complete，新 Active Portfolio Item 為 `ai-engineering-os`（不在 Gstar 追蹤清單內）
+- `ecosystem-blueprint` 治理角色轉為 Terminal/Complete。**2026-08-24 第二輪修正**：刪除前次殘留的「新 Active Portfolio Item 為 `ai-engineering-os`」陳述——該陳述來自已過時的 CLAUDE.md 快照。目前 post-4R 的 Active Portfolio Item 尚待 fresh canonical Portfolio transition 確認，Gstar 本報告不作 Active 宣告（詳見上方「專案宇宙變動偵測」）
 
 ---
 
 ## 行動建議時程
 
-| 時程 | 動作 |
+> **2026-08-24 第二輪修正**：本節全面改為候選建議清單。Gstar 為稽核/雷達層報告，不具備逕行排定實作時程的權限——所有實作類項目一律標示為候選，需經 Portfolio classification、fresh owning-repository verification 與 Human authorization 後，方可排入實際時程或開始執行。純粹持續觀察（監控活躍度/趨勢，非執行動作）與待 Human 決策項目維持原樣。
+
+| 類別 | 項目 |
 |------|------|
-| 下週 | `headroomlabs-ai/headroom` 於 Pantheon 或 Aletheia 挑一條 pipeline 做 token 壓縮 PoC |
-| Sprint 內 | `nashsu/llm_wiki` 評估桌面/API 整合路徑；`Graphify-Labs/graphify` 與 GitNexus 分工評估 |
-| Stage 3 前 | `comet-ml/opik` 導入 Pantheon 補齊 observability；`crewAIInc/crewAI` vs LangGraph 架構對照 |
-| Stage 3 後 | `rtk-ai/rtk` 併同 headroom PoC 結果一併評估 |
-| 持續觀察 | `TauricResearch/TradingAgents` 活躍度是否恢復；`NousResearch/hermes-agent` open issues/PRs 趨勢（11,912 open issues · 23,119 open PRs，2026-08-24 查證） |
-| 候選 · 待 Portfolio 審核與 Human approval gate 核准後排程（2026-08-24 修正） | `NVIDIA/SkillSpector` 是否導入 agent-config 作為 skill 上線前安全掃描關卡——此為 Portfolio/governance 層級決策，非 Gstar 報告可逕行排定的執行時程（`vancelin/openmemory` 原列的「本週除役」項目已確認為方法論誤判並移除，詳見「不活躍警告」：目前並無待除役的實際整合） |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `headroomlabs-ai/headroom`：於 Pantheon 或 Aletheia 挑一條 pipeline 做 token 壓縮 PoC |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `nashsu/llm_wiki`：評估桌面/API 整合路徑 |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `Graphify-Labs/graphify`：與 GitNexus 分工評估（GitNexus 管程式碼，graphify 管文件/SQL） |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `comet-ml/opik`：導入 Pantheon 補齊 observability |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `crewAIInc/crewAI`：vs LangGraph 架構對照評估 |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `rtk-ai/rtk`：併同 headroom PoC 結果一併評估 |
+| 候選建議 — 待 Portfolio classification、fresh owning-repository verification 與 Human authorization 後才可排程或執行 | `NVIDIA/SkillSpector`：導入 agent-config 作為 skill 上線前安全掃描關卡 |
+| 持續觀察 | `TauricResearch/TradingAgents` 活躍度是否恢復（36天無 push） |
+| 持續觀察 | `NousResearch/hermes-agent` open issues/PRs 趨勢（11,912 open issues · 23,119 open PRs，2026-08-24 查證，`vancelin/openmemory` 原列的「本週除役」項目已確認為方法論誤判並移除，詳見「不活躍警告」：目前並無待除役的實際整合） |
 | 待 Human 決策 | 是否將 `ai-engineering-os` 或 `agent-config`（Portfolio Order 4R）併入下次 Gstar 追蹤的 active project 清單（詳見上方「專案宇宙變動偵測」2026-08-24 修正） |
 
 ---
